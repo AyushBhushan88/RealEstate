@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  AGENT
+  OWNER
+  BUYER
+  TENANT
+  ACCOUNT_MANAGER
+}
+
+enum PropertyType {
+  HOUSE
+  APARTMENT
+  CONDO
+  LAND
+  COMMERCIAL
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  PENDING
+  SOLD
+  RENTED
+  ARCHIVED
+}
+
+enum ListingType {
+  SALE
+  RENTAL
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?
+  role          UserRole  @default(BUYER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  profile       Profile?
+  properties    Property[] @relation("AgentProperties")
+  ownedProperties Property[] @relation("OwnerProperties")
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  firstName   String?
+  lastName    String?
+  phoneNumber String?
+  avatarUrl   String?
+  bio         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Property {
+  id            String        @id @default(cuid())
+  title         String
+  description   String
+  price         Decimal       @db.Decimal(12, 2)
+  address       String
+  city          String
+  state         String?
+  zipCode       String
+  country       String        @default("USA")
+  
+  type          PropertyType
+  listingType   ListingType
+  status        ListingStatus @default(DRAFT)
+  
+  bedrooms      Int?
+  bathrooms     Decimal?      @db.Decimal(3, 1)
+  squareFeet    Int?
+  lotSize       Decimal?      @db.Decimal(10, 2)
+  yearBuilt     Int?
+  
+  agentId       String
+  agent         User          @relation("AgentProperties", fields: [agentId], references: [id])
+  
+  ownerId       String?
+  owner         User?         @relation("OwnerProperties", fields: [ownerId], references: [id])
+  
+  media         Media[]
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([agentId])
+  @@index([ownerId])
+  @@index([status])
+}
+
+model Media {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  url         String
+  type        String   @default("IMAGE") // IMAGE, VIDEO
+  isMain      Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([propertyId])
+}
