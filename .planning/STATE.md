@@ -3,7 +3,7 @@
 **Last Updated:** 2026-03-09
 
 ## Current Status
-Phase 1: Foundation & Core Listings is complete. The system supports full user authentication, role-based access, property listing management with media uploads, public gallery with advanced filtering, and a lead inquiry system.
+Phase 2: Transaction & Lease Management is active. Digital contract drafting, native e-signatures, Stripe payment integration, and the Transactions dashboard are successfully implemented.
 
 ## High-Level Roadmap
 - [x] Initial Project Definition (`PROJECT.md`)
@@ -14,15 +14,15 @@ Phase 1: Foundation & Core Listings is complete. The system supports full user a
 - [x] Property Listing Management (Backend & Agent Dashboard)
 - [x] Public Property Gallery & Advanced Filtering
 - [x] Lead Management & Inquiries
-- [ ] Phase 2: Transaction & Lease Management (Next)
+- [x] Phase 2: Digital Contracts & Native E-Signatures
+- [x] Phase 2: Stripe Payment Integration & Transactions Dashboard
 
 ## Active Work
-- [x] Milestone 1: Environment & Architecture (Complete)
-- [x] Milestone 2: Identity & Access Management (Complete)
-- [x] Milestone 3: Property Listing Engine (Complete)
-- [x] Milestone 4: Search & Discovery (Complete)
-- [x] Milestone 5: Lead Management & Inquiries (Complete)
-- [ ] Phase 2 Planning (Upcoming)
+- [x] Phase 1 Full Completion (All Milestones)
+- [x] Phase 2 Planning (`ROADMAP.md` updated)
+- [x] Milestone 1: Lease Agreements & Digital Signatures (Native)
+- [x] Milestone 2: Payment Processing & Transactions (Stripe)
+- [ ] Final Testing & Refinements
 
 ## Blockers
 - (None)

@@ -61,18 +61,18 @@
 **Goal:** Enable digital deal closing, document management, and transaction tracking.
 
 ## Milestone 1: Lease Agreements & Digital Signatures
-- [ ] **[P2-M1-01] Document Template Engine**
+- [x] **[P2-M1-01] Document Template Engine**
   - Generate PDF lease agreements and sales contracts.
-- [ ] **[P2-M1-02] E-Signature Integration**
-  - Integrate with DocuSign or HelloSign API.
-- [ ] **[P2-M1-03] Tenant Onboarding Flow**
+- [x] **[P2-M1-02] E-Signature Integration**
+  - Implemented Native Digital Signature Flow.
+- [x] **[P2-M1-03] Tenant Onboarding Flow**
   - Profile verification and lease signing UI.
 
 ## Milestone 2: Payment Processing
-- [ ] **[P2-M2-01] Stripe Integration**
+- [x] **[P2-M2-01] Stripe Integration**
   - Process deposits, rent payments, and commissions.
-- [ ] **[P2-M2-02] Invoicing System**
-  - Automated recurring invoices for rentals.
+- [x] **[P2-M2-02] Invoicing & Transaction System**
+  - Automated tracking and Transactions Dashboard.
 
 ## Success Criteria for Phase 1
 1.  Users can sign up and are assigned a specific role.

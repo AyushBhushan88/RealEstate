@@ -19,6 +19,7 @@ export default function DashboardLayout({
     { name: 'My Properties', path: '/dashboard/properties', icon: 'ðŸ' },
     { name: 'Contracts', path: '/dashboard/contracts', icon: 'ðŸ“ƒ' },
     { name: 'Messages', path: '/dashboard/messages', icon: 'ðŸ’¬' },
+    { name: 'Transactions', path: '/dashboard/transactions', icon: 'ðŸ’³' },
     { name: 'Settings', path: '/dashboard/settings', icon: 'âš™ï¸' },
   ];
 

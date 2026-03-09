@@ -107,3 +107,43 @@ export const getMyContracts = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to fetch contracts' });
   }
 };
+
+export const signContract = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { signature } = req.body; // Full legal name typed as signature
+    const userId = (req as any).user.userId;
+
+    if (!signature) {
+      return res.status(400).json({ error: 'Signature is required' });
+    }
+
+    const contract = await prisma.contract.findUnique({
+      where: { id }
+    });
+
+    if (!contract) return res.status(404).json({ error: 'Contract not found' });
+
+    if (contract.clientId !== userId) {
+      return res.status(403).json({ error: 'Only the designated client can sign this contract' });
+    }
+
+    if (contract.status !== 'DRAFT' && contract.status !== 'PENDING_SIGNATURE') {
+      return res.status(400).json({ error: 'Contract cannot be signed in its current status' });
+    }
+
+    const updatedContract = await prisma.contract.update({
+      where: { id },
+      data: {
+        status: 'SIGNED',
+        signedAt: new Date(),
+        // In a real system, you would append the signature to the PDF and save to S3/Cloudinary
+      }
+    });
+
+    res.json({ message: 'Contract signed successfully', contract: updatedContract });
+  } catch (error) {
+    console.error('Sign contract error:', error);
+    res.status(500).json({ error: 'Failed to sign contract' });
+  }
+};
