@@ -116,6 +116,13 @@ export default function MessagesPage() {
                   <option value="CLOSED">Closed</option>
                   <option value="ARCHIVED">Archive</option>
                 </select>
+                <Link 
+                  href={`/dashboard/contracts/new?propertyId=${inquiry.propertyId}&clientId=${inquiry.userId}&name=${encodeURIComponent(inquiry.name)}`}
+                  className="btn-primary" 
+                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.7rem', textDecoration: 'none', textAlign: 'center' }}
+                >
+                  Create Contract
+                </Link>
                 <button className="btn-outline" style={{ padding: '0.25rem', fontSize: '0.75rem' }}>
                   Reply
                 </button>

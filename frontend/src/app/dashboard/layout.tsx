@@ -17,6 +17,7 @@ export default function DashboardLayout({
   const navItems = [
     { name: 'Overview', path: '/dashboard', icon: 'ðŸ“Š' },
     { name: 'My Properties', path: '/dashboard/properties', icon: 'ðŸ' },
+    { name: 'Contracts', path: '/dashboard/contracts', icon: 'ðŸ“ƒ' },
     { name: 'Messages', path: '/dashboard/messages', icon: 'ðŸ’¬' },
     { name: 'Settings', path: '/dashboard/settings', icon: 'âš™ï¸' },
   ];
