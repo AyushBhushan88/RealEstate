@@ -22,6 +22,11 @@ export const createProperty = async (req: Request, res: Response) => {
       ownerId
     } = req.body;
 
+    // Basic validation
+    if (!title || !description || !price || !address || !city || !zipCode || !type || !listingType) {
+      return res.status(400).json({ error: 'Missing required fields: title, description, price, address, city, zipCode, type, and listingType are mandatory.' });
+    }
+
     const agentId = (req as any).user.userId;
 
     const property = await prisma.property.create({
@@ -97,7 +102,7 @@ export const getProperties = async (req: Request, res: Response) => {
 
 export const getPropertyById = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
 
     const property = await prisma.property.findUnique({
       where: { id },
@@ -130,7 +135,7 @@ export const getPropertyById = async (req: Request, res: Response) => {
 
 export const updateProperty = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const userId = (req as any).user.userId;
     const userRole = (req as any).user.role;
 
@@ -160,7 +165,7 @@ export const updateProperty = async (req: Request, res: Response) => {
 
 export const deleteProperty = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const userId = (req as any).user.userId;
     const userRole = (req as any).user.role;
 

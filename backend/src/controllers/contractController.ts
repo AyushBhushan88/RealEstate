@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { generatePDF, getLeaseTemplate } from '../lib/pdfService';
+import { createNotification, NotificationType } from '../lib/notificationService';
 
 export const createContract = async (req: Request, res: Response) => {
   try {
@@ -42,7 +43,7 @@ export const createContract = async (req: Request, res: Response) => {
 
 export const downloadContractPDF = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     
     const contract = await prisma.contract.findUnique({
       where: { id },
@@ -110,7 +111,7 @@ export const getMyContracts = async (req: Request, res: Response) => {
 
 export const signContract = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const { signature } = req.body; // Full legal name typed as signature
     const userId = (req as any).user.userId;
 
@@ -138,7 +139,20 @@ export const signContract = async (req: Request, res: Response) => {
         status: 'SIGNED',
         signedAt: new Date(),
         // In a real system, you would append the signature to the PDF and save to S3/Cloudinary
+      },
+      include: {
+        property: true,
+        client: { include: { profile: true } }
       }
+    });
+
+    // Notify Agent
+    await createNotification({
+      userId: updatedContract.property.agentId,
+      type: NotificationType.CONTRACT_SIGNED,
+      title: 'Contract Signed!',
+      message: `${updatedContract.client.profile?.firstName} signed the contract for "${updatedContract.property.title}".`,
+      link: '/dashboard/contracts'
     });
 
     res.json({ message: 'Contract signed successfully', contract: updatedContract });

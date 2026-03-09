@@ -9,6 +9,7 @@ import mediaRoutes from './routes/mediaRoutes';
 import inquiryRoutes from './routes/inquiryRoutes';
 import contractRoutes from './routes/contractRoutes';
 import paymentRoutes from './routes/paymentRoutes';
+import notificationRoutes from './routes/notificationRoutes';
 
 dotenv.config();
 
@@ -19,6 +20,10 @@ const port = process.env.PORT || 5000;
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
+
+// Use raw body for Stripe webhook
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
+
 app.use(express.json());
 
 // Routes
@@ -28,6 +33,7 @@ app.use('/api/media', mediaRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/contracts', contractRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {

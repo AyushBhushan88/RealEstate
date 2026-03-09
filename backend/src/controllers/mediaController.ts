@@ -52,7 +52,7 @@ export const uploadPropertyMedia = async (req: Request, res: Response) => {
 
 export const deleteMedia = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const userId = (req as any).user.userId;
     const userRole = (req as any).user.role;
 

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import stripe from '../lib/stripe';
 import prisma from '../lib/prisma';
+import { createNotification, NotificationType } from '../lib/notificationService';
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
   try {
@@ -67,7 +68,7 @@ export const handleWebhook = async (req: Request, res: Response) => {
     // Update contract and create transaction
     const { contractId, userId, type } = session.metadata;
 
-    await prisma.transaction.create({
+    const transaction = await prisma.transaction.create({
       data: {
         contractId,
         userId,
@@ -76,6 +77,9 @@ export const handleWebhook = async (req: Request, res: Response) => {
         status: 'COMPLETED',
         stripeId: session.id,
         paymentMethod: session.payment_method_types[0]
+      },
+      include: {
+        contract: { include: { property: true } }
       }
     });
 
@@ -84,6 +88,26 @@ export const handleWebhook = async (req: Request, res: Response) => {
       await prisma.contract.update({
         where: { id: contractId },
         data: { status: 'ACTIVE' }
+      });
+    }
+
+    // Notify Agent
+    if (transaction.contract) {
+      await createNotification({
+        userId: transaction.contract.property.agentId,
+        type: NotificationType.PAYMENT_RECEIVED,
+        title: 'Payment Received',
+        message: `A payment of $${transaction.amount} was received for "${transaction.contract.property.title}".`,
+        link: '/dashboard/transactions'
+      });
+
+      // Notify User
+      await createNotification({
+        userId: transaction.userId,
+        type: NotificationType.PAYMENT_RECEIVED,
+        title: 'Payment Successful',
+        message: `Your payment of $${transaction.amount} for "${transaction.contract.property.title}" was processed successfully.`,
+        link: '/dashboard/transactions'
       });
     }
   }

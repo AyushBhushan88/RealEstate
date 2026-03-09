@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
+import { createNotification, NotificationType } from '../lib/notificationService';
 
 export const createInquiry = async (req: Request, res: Response) => {
   try {
@@ -27,6 +28,15 @@ export const createInquiry = async (req: Request, res: Response) => {
         phone,
         message,
       },
+    });
+
+    // Notify Agent
+    await createNotification({
+      userId: property.agentId,
+      type: NotificationType.INQUIRY_NEW,
+      title: 'New Inquiry Received',
+      message: `You have a new inquiry from ${name} for "${property.title}".`,
+      link: '/dashboard/messages'
     });
 
     res.status(201).json(inquiry);
@@ -70,7 +80,7 @@ export const getAgentInquiries = async (req: Request, res: Response) => {
 
 export const updateInquiryStatus = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const { status } = req.body;
     const agentId = (req as any).user.userId;
 

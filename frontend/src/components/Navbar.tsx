@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
+import NotificationBell from './NotificationBell';
 import styles from '../app/page.module.css';
 
 export default function Navbar({ transparent = false }: { transparent?: boolean }) {
@@ -33,7 +34,8 @@ export default function Navbar({ transparent = false }: { transparent?: boolean 
       <div className={styles.authGroup}>
         {user ? (
           <>
-            <Link href="/dashboard" className={styles.navLink} style={{ color: isTransparent ? '#fff' : 'var(--foreground)', marginRight: '1rem' }}>
+            <NotificationBell />
+            <Link href="/dashboard" className={styles.navLink} style={{ color: isTransparent ? '#fff' : 'var(--foreground)', marginRight: '1rem', marginLeft: '1rem' }}>
               Dashboard
             </Link>
             <button onClick={logout} className="btn-outline" style={{ ...(isTransparent ? { color: '#fff', borderColor: 'rgba(255,255,255,0.4)' } : {}) }}>

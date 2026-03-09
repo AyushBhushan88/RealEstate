@@ -53,10 +53,10 @@
   - Endpoints to submit property inquiries and contact requests.
 - [x] **[P1-M5-02] Agent Lead Dashboard**
   - A view for agents to see incoming leads and messages.
-- [ ] **[P1-M5-03] Notification System**
-  - Real-time or email notifications for new inquiries.
+- [x] **[P1-M5-03] Notification System**
+  - Real-time or email notifications for new inquiries, signed contracts, and payments.
 
-# Phase 2: Transaction & Lease Management (Proposed)
+# Phase 2: Transaction & Lease Management (Complete)
 
 **Goal:** Enable digital deal closing, document management, and transaction tracking.
 
@@ -74,8 +74,35 @@
 - [x] **[P2-M2-02] Invoicing & Transaction System**
   - Automated tracking and Transactions Dashboard.
 
+# Phase 3: Property Owner & Account Management (Active)
+
+**Goal:** Provide property owners with performance insights and automate commission management for account managers.
+
+## Milestone 1: Property Owner Dashboard [ANLY-01]
+- [ ] **[P3-M1-01] Owner Performance API**
+  - Aggregate data on views, inquiries, and revenue for owned properties.
+- [ ] **[P3-M1-02] Owner UI**
+  - Dedicated dashboard for owners to track their property portfolio.
+
+## Milestone 2: Account Management & Commissions
+- [ ] **[P3-M2-01] Commission Split Logic**
+  - Automated calculation of agent vs. agency splits on successful payments.
+- [ ] **[P3-M2-02] Account Manager View**
+  - Dashboard to approve/track payouts and financial reports.
+
+## Milestone 3: Profile Verification & Security
+- [ ] **[P3-M3-01] Document Verification Service**
+  - Integration for identity/income verification (e.g., using a service or manual upload).
+- [ ] **[P3-M3-02] Enhanced Security Logs**
+  - Audit trail for all financial transactions and contract changes.
+
 ## Success Criteria for Phase 1
 1.  Users can sign up and are assigned a specific role.
 2.  Agents can successfully upload a property with images.
 3.  Anonymous users can view all active listings on the home page.
 4.  Database integrity is maintained for all property fields.
+
+## Success Criteria for Phase 2
+1. Digital contracts are generated and signed legally.
+2. Stripe payments are correctly processed and recorded.
+3. Notifications are triggered for key events.

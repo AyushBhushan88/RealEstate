@@ -3,7 +3,7 @@
 **Last Updated:** 2026-03-09
 
 ## Current Status
-Phase 2: Transaction & Lease Management is active. Digital contract drafting, native e-signatures, Stripe payment integration, and the Transactions dashboard are successfully implemented.
+Phase 3: Property Owner & Account Management is active. Roadmap defined for owner dashboards, commission management, and profile verification.
 
 ## High-Level Roadmap
 - [x] Initial Project Definition (`PROJECT.md`)
@@ -16,13 +16,15 @@ Phase 2: Transaction & Lease Management is active. Digital contract drafting, na
 - [x] Lead Management & Inquiries
 - [x] Phase 2: Digital Contracts & Native E-Signatures
 - [x] Phase 2: Stripe Payment Integration & Transactions Dashboard
+- [ ] Phase 3: Property Owner & Account Management (Active)
 
 ## Active Work
 - [x] Phase 1 Full Completion (All Milestones)
-- [x] Phase 2 Planning (`ROADMAP.md` updated)
-- [x] Milestone 1: Lease Agreements & Digital Signatures (Native)
-- [x] Milestone 2: Payment Processing & Transactions (Stripe)
-- [ ] Final Testing & Refinements
+- [x] Phase 2 Full Completion (All Milestones)
+- [x] Branch `REUpdate_V3` created for Phase 3
+- [x] Phase 3 Planning (`ROADMAP.md` updated)
+- [ ] Milestone 1: Property Owner Dashboard [P3-M1]
+- [ ] Milestone 2: Account Management & Commissions [P3-M2]
 
 ## Blockers
 - (None)

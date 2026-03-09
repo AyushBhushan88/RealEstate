@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
 import { apiFetch } from '../../lib/api';
+import { useToast } from '../../context/ToastContext';
 import styles from '../dashboard.module.css';
 
 interface Contract {
@@ -29,6 +30,7 @@ interface Contract {
 
 export default function ContractsPage() {
   const { user } = useAuth();
+  const { showToast } = useToast();
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -80,14 +82,15 @@ export default function ContractsPage() {
 
   const handlePay = async (contractId: string) => {
     try {
+      showToast('Redirecting to secure payment...', 'info');
       const data = await apiFetch('/payments/create-session', {
         method: 'POST',
         body: JSON.stringify({ contractId, type: 'DEPOSIT' }),
       });
       window.location.href = data.url;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Payment error:', error);
-      alert('Failed to start payment process');
+      showToast(error.message || 'Failed to start payment process', 'error');
     }
   };
 
@@ -109,8 +112,10 @@ export default function ContractsPage() {
       
       setSigningContractId(null);
       setSignature('');
+      showToast('Contract signed successfully!', 'success');
     } catch (error: any) {
       setSigningError(error.message || 'Failed to sign contract');
+      showToast(error.message || 'Failed to sign contract', 'error');
     } finally {
       setIsSigning(false);
     }
