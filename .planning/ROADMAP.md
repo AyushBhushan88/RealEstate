@@ -28,12 +28,13 @@
 ## Milestone 3: Property Listing Engine
 *Focus: Delivering [LIST-01], [LIST-02], and [LIST-03].*
 
-- [ ] **[P1-M3-01] Property CRUD API (Active)**
+- [x] **[P1-M3-01] Property CRUD API**
   - Endpoints to create, read, update, and delete property listings.
-- [ ] **[P1-M3-02] Media Upload Integration**
-  - Integrate a cloud provider (e.g., Cloudinary or AWS S3) for property images.
+- [x] **[P1-M3-02] Media Upload Integration**
+  - Integrate Cloudinary for property images.
 - [ ] **[P1-M3-03] Agent Dashboard (Core)**
-  - A UI for Agents to manage their own listings.
+  - UI for Agents to create and manage their listings.
+  - Integration with Media Upload UI.
 - [ ] **[P1-M3-04] Public Property Gallery**
   - A landing page showing available properties with basic search/filtering [SRCH-01].
 

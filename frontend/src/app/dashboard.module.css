@@ -1,0 +1,230 @@
+.dashboardContainer {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
+.sidebar {
+  background-color: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebarLogo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: var(--foreground);
+}
+
+.sidebarLogo span {
+  color: var(--primary);
+}
+
+.navSection {
+  flex: 1;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+
+.navLink:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.navLinkActive {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.mainContent {
+  padding: 2.5rem 3rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.statLabel {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.propertyList {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 80px 2fr 1fr 1fr 100px;
+  padding: 1rem 1.5rem;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.propertyRow {
+  display: grid;
+  grid-template-columns: 80px 2fr 1fr 1fr 100px;
+  padding: 1rem 1.5rem;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.propertyRow:last-child {
+  border-bottom: none;
+}
+
+.propertyRow:hover {
+  background: var(--primary-light);
+}
+
+.propertyImg {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  background: #eee;
+}
+
+.propertyName {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.propertyAddress {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.statusBadge {
+  display: inline-flex;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.statusActive { background: #dcfce7; color: #166534; }
+.statusDraft { background: #f1f5f9; color: #475569; }
+.statusPending { background: #fef9c3; color: #854d0e; }
+
+.actionBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+  background: var(--border);
+  color: var(--foreground);
+}
+
+/* Form Styles */
+.formCard {
+  background: var(--surface);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.sectionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sectionTitle:first-child {
+  margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+  .dashboardContainer {
+    grid-template-columns: 80px 1fr;
+  }
+  .sidebar span:not(.sidebarLogo span) {
+    display: none;
+  }
+  .sidebarLogo {
+    text-align: center;
+  }
+}

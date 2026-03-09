@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
+import propertyRoutes from './routes/propertyRoutes';
+import mediaRoutes from './routes/mediaRoutes';
 
 dotenv.config();
 
@@ -18,6 +20,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/properties', propertyRoutes);
+app.use('/api/media', mediaRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {
