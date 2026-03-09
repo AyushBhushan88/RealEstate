@@ -23,6 +23,11 @@ Phase 3: Property Owner & Account Management is complete. Features implemented: 
 - [x] Phase 2 Full Completion (All Milestones)
 - [x] Phase 3 Full Completion (All Milestones)
 - [x] Branch `REUpdate_V3` created and updated with all Phase 3 code
+- [x] Comprehensive Demo Seed Script implemented (`backend/prisma/seed.ts`)
+
+## Demo Instructions
+1. Run `npx prisma db seed` in the `backend` directory to populate the platform.
+2. Use the provided demo credentials (password: `password123`) to explore role-specific dashboards.
 
 ## Blockers
 - (None)
