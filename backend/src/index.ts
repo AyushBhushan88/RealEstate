@@ -13,6 +13,9 @@ import notificationRoutes from './routes/notificationRoutes';
 import ownerRoutes from './routes/ownerRoutes';
 import adminRoutes from './routes/adminRoutes';
 import verificationRoutes from './routes/verificationRoutes';
+import bookingRoutes from './routes/bookingRoutes';
+import favoriteRoutes from './routes/favoriteRoutes';
+import savedSearchRoutes from './routes/savedSearchRoutes';
 
 dotenv.config();
 
@@ -40,6 +43,9 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/owners', ownerRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/verification', verificationRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/favorites', favoriteRoutes);
+app.use('/api/saved-searches', savedSearchRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {

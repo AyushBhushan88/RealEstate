@@ -56,53 +56,25 @@
 - [x] **[P1-M5-03] Notification System**
   - Real-time or email notifications for new inquiries, signed contracts, and payments.
 
-# Phase 2: Transaction & Lease Management (Complete)
+# Phase 4: Customer Relationship & Experience
 
-**Goal:** Enable digital deal closing, document management, and transaction tracking.
+**Goal:** Enhance the platform for buyers/tenants with saved searches, favorites, and an integrated booking system for viewings.
 
-## Milestone 1: Lease Agreements & Digital Signatures
-- [x] **[P2-M1-01] Document Template Engine**
-  - Generate PDF lease agreements and sales contracts.
-- [x] **[P2-M1-02] E-Signature Integration**
-  - Implemented Native Digital Signature Flow.
-- [x] **[P2-M1-03] Tenant Onboarding Flow**
-  - Profile verification and lease signing UI.
+## Milestone 1: Viewing Booking System [LEAD-02]
+- [x] **[P4-M1-01] Booking API**
+  - Endpoints to request, confirm, and cancel property viewings.
+- [x] **[P4-M1-02] Viewing UI**
+  - Integrated booking form on property detail pages and a management dashboard for both agents and clients.
+- [x] **[P4-M1-03] Notifications for Bookings**
+  - Real-time notifications when a viewing is requested or its status changes.
 
-## Milestone 2: Payment Processing
-- [x] **[P2-M2-01] Stripe Integration**
-  - Process deposits, rent payments, and commissions.
-- [x] **[P2-M2-02] Invoicing & Transaction System**
-  - Automated tracking and Transactions Dashboard.
+## Milestone 2: Personalization & Favorites [SRCH-02]
+- [x] **[P4-M2-01] Favorite Properties**
+  - Allow registered users to "heart" properties and view them in a dedicated dashboard section.
+- [x] **[P4-M2-02] Saved Searches & Alerts**
+  - Enable users to save their search criteria and receive alerts when matching properties are listed.
 
-# Phase 3: Property Owner & Account Management (Complete)
-
-**Goal:** Provide property owners with performance insights and automate commission management for account managers.
-
-## Milestone 1: Property Owner Dashboard [ANLY-01]
-- [x] **[P3-M1-01] Owner Performance API**
-  - Aggregate data on views, inquiries, and revenue for owned properties.
-- [x] **[P3-M1-02] Owner UI**
-  - Dedicated dashboard for owners to track their property portfolio.
-
-## Milestone 2: Account Management & Commissions
-- [x] **[P3-M2-01] Commission Split Logic**
-  - Automated calculation of agent vs. agency splits on successful payments.
-- [x] **[P3-M2-02] Account Manager View**
-  - Dashboard to approve/track payouts and financial reports.
-
-## Milestone 3: Profile Verification & Security
-- [x] **[P3-M3-01] Document Verification Service**
-  - Integration for identity/income verification.
-- [x] **[P3-M3-02] Enhanced Security Logs**
-  - Audit trail for all financial transactions and contract changes.
-
-## Success Criteria for Phase 1
-1.  Users can sign up and are assigned a specific role.
-2.  Agents can successfully upload a property with images.
-3.  Anonymous users can view all active listings on the home page.
-4.  Database integrity is maintained for all property fields.
-
-## Success Criteria for Phase 2
-1. Digital contracts are generated and signed legally.
-2. Stripe payments are correctly processed and recorded.
-3. Notifications are triggered for key events.
+## Success Criteria for Phase 4
+1. Buyers can successfully request a viewing from a property page.
+2. Agents receive and can confirm viewing requests.
+3. Users can manage their viewing schedule from their dashboard.

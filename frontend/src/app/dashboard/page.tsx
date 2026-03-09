@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../context/AuthContext';
-import { apiFetch } from '../lib/api';
-import styles from './dashboard.module.css';
+import { useAuth } from '../../context/AuthContext';
+import { apiFetch } from '../../lib/api';
+import styles from '../dashboard.module.css';
 import OwnerDashboard from './owner/page';
 import AdminDashboard from './admin/page';
 

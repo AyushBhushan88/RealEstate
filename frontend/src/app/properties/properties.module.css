@@ -105,6 +105,35 @@
   font-weight: 600;
 }
 
+.favoriteButton {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+  color: #64748b;
+  font-size: 1.25rem;
+}
+
+.favoriteButton:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+.favoriteButton.isFavorited {
+  color: #ef4444;
+}
+
 .cardContent {
   padding: 1.5rem;
   flex: 1;

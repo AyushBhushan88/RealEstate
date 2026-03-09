@@ -5,6 +5,8 @@ export enum NotificationType {
   CONTRACT_SIGNED = 'CONTRACT_SIGNED',
   PAYMENT_RECEIVED = 'PAYMENT_RECEIVED',
   SYSTEM_ALERT = 'SYSTEM_ALERT',
+  BOOKING_NEW = 'BOOKING_NEW',
+  BOOKING_CONFIRMED = 'BOOKING_CONFIRMED',
 }
 
 interface CreateNotificationParams {

@@ -58,6 +58,33 @@
   align-items: flex-start;
 }
 
+.favoriteButton {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #64748b;
+  font-size: 1.5rem;
+  margin-left: 1.5rem;
+}
+
+.favoriteButton:hover {
+  background: #f8fafc;
+  transform: scale(1.1);
+  border-color: var(--primary);
+}
+
+.favoriteButton.isFavorited {
+  color: #ef4444;
+  border-color: #fecaca;
+}
+
 .title {
   font-size: 2.5rem;
   font-weight: 800;
@@ -165,6 +192,71 @@
   width: 100%;
   margin-top: 1rem;
   padding: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formGroup label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.input, .textarea {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.successMsg {
+  padding: 1.5rem;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.successMsg h3 {
+  color: #166534;
+  margin-bottom: 0.5rem;
+}
+
+.successMsg p {
+  color: #15803d;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.errorMsg {
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
 }
 
 @media (max-width: 1024px) {

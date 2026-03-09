@@ -7,6 +7,7 @@ exports.getMyTransactions = exports.handleWebhook = exports.createCheckoutSessio
 const stripe_1 = __importDefault(require("../lib/stripe"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const notificationService_1 = require("../lib/notificationService");
+const auditService_1 = require("../lib/auditService");
 const createCheckoutSession = async (req, res) => {
     try {
         const { contractId, type } = req.body;
@@ -77,13 +78,50 @@ const handleWebhook = async (req, res) => {
                 contract: { include: { property: true } }
             }
         });
-        // If it's a signed lease deposit, activate contract
+        // Create Commission Splits if applicable (70% Agent, 30% Agency/System)
         if (type === 'DEPOSIT' || type === 'RENT') {
+            const totalAmount = session.amount_total / 100;
+            const agentAmount = totalAmount * 0.7;
+            const agencyAmount = totalAmount * 0.3;
+            // Agent portion
+            await prisma_1.default.transaction.create({
+                data: {
+                    contractId,
+                    userId, // Payer remains same
+                    recipientId: transaction.contract?.property.agentId,
+                    amount: agentAmount,
+                    type: 'COMMISSION',
+                    status: 'COMPLETED',
+                    parentId: transaction.id,
+                    metadata: { split: '70%', role: 'AGENT' }
+                }
+            });
+            // Agency portion (System fee)
+            await prisma_1.default.transaction.create({
+                data: {
+                    contractId,
+                    userId,
+                    amount: agencyAmount,
+                    type: 'FEE',
+                    status: 'COMPLETED',
+                    parentId: transaction.id,
+                    metadata: { split: '30%', role: 'AGENCY' }
+                }
+            });
+            // Activate contract
             await prisma_1.default.contract.update({
                 where: { id: contractId },
                 data: { status: 'ACTIVE' }
             });
         }
+        // Audit Log for the main transaction
+        await (0, auditService_1.createAuditLog)({
+            userId,
+            action: 'PAYMENT_COMPLETED',
+            entity: 'Transaction',
+            entityId: transaction.id,
+            details: { contractId, type, amount: transaction.amount }
+        });
         // Notify Agent
         if (transaction.contract) {
             await (0, notificationService_1.createNotification)({

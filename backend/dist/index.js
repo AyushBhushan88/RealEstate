@@ -15,6 +15,9 @@ const inquiryRoutes_1 = __importDefault(require("./routes/inquiryRoutes"));
 const contractRoutes_1 = __importDefault(require("./routes/contractRoutes"));
 const paymentRoutes_1 = __importDefault(require("./routes/paymentRoutes"));
 const notificationRoutes_1 = __importDefault(require("./routes/notificationRoutes"));
+const ownerRoutes_1 = __importDefault(require("./routes/ownerRoutes"));
+const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
+const verificationRoutes_1 = __importDefault(require("./routes/verificationRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
@@ -33,6 +36,9 @@ app.use('/api/inquiries', inquiryRoutes_1.default);
 app.use('/api/contracts', contractRoutes_1.default);
 app.use('/api/payments', paymentRoutes_1.default);
 app.use('/api/notifications', notificationRoutes_1.default);
+app.use('/api/owners', ownerRoutes_1.default);
+app.use('/api/admin', adminRoutes_1.default);
+app.use('/api/verification', verificationRoutes_1.default);
 // Basic Route
 app.get('/', (req, res) => {
     res.json({ message: 'Real Estate Management System API' });

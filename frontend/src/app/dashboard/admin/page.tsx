@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { apiFetch } from '../../lib/api';
-import styles from '../dashboard.module.css';
+import { useAuth } from '../../../context/AuthContext';
+import { apiFetch } from '../../../lib/api';
+import styles from '../../dashboard.module.css';
 
 interface FinancialStats {
   summary: {

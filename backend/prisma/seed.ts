@@ -1,4 +1,5 @@
-import { PrismaClient, UserRole, PropertyType, ListingType, ListingStatus, TransactionType, TransactionStatus, ContractStatus } from '@prisma/client';
+import 'dotenv/config';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();

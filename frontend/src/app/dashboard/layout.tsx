@@ -16,7 +16,10 @@ export default function DashboardLayout({
 
   const allNavItems = [
     { name: 'Overview', path: '/dashboard', icon: 'ðŸ“Š', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
+    { name: 'Favorites', path: '/dashboard/favorites', icon: 'â¤ï¸', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
+    { name: 'Saved Searches', path: '/dashboard/saved-searches', icon: 'ðŸ”', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
     { name: 'My Properties', path: '/dashboard/properties', icon: 'ðŸ', roles: ['ADMIN', 'AGENT'] },
+    { name: 'Bookings', path: '/dashboard/bookings', icon: 'ðŸ“…', roles: ['ADMIN', 'AGENT', 'BUYER', 'TENANT'] },
     { name: 'Contracts', path: '/dashboard/contracts', icon: 'ðŸ“ƒ', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
     { name: 'Messages', path: '/dashboard/messages', icon: 'ðŸ’¬', roles: ['ADMIN', 'AGENT'] },
     { name: 'Transactions', path: '/dashboard/transactions', icon: 'ðŸ’³', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },

@@ -103,14 +103,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <style jsx>{`
-        .${styles.welcomeText} {
-          margin-right: 1.5rem;
-          font-weight: 500;
-          color: ${scrolled ? 'var(--foreground)' : '#fff'};
-        }
-      `}</style>
     </div>
   );
 }

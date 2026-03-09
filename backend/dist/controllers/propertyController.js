@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProperty = exports.updateProperty = exports.getPropertyById = exports.getProperties = exports.createProperty = void 0;
+exports.deleteProperty = exports.updateProperty = exports.recordPropertyView = exports.getPropertyById = exports.getProperties = exports.createProperty = void 0;
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const createProperty = async (req, res) => {
     try {
@@ -107,6 +107,11 @@ const getPropertyById = async (req, res) => {
         if (!property) {
             return res.status(404).json({ error: 'Property not found' });
         }
+        // Increment view count asynchronously
+        prisma_1.default.property.update({
+            where: { id },
+            data: { views: { increment: 1 } }
+        }).catch(err => console.error('Error incrementing property views:', err));
         res.json(property);
     }
     catch (error) {
@@ -114,6 +119,20 @@ const getPropertyById = async (req, res) => {
     }
 };
 exports.getPropertyById = getPropertyById;
+const recordPropertyView = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await prisma_1.default.property.update({
+            where: { id },
+            data: { views: { increment: 1 } }
+        });
+        res.json({ success: true });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Failed to record view' });
+    }
+};
+exports.recordPropertyView = recordPropertyView;
 const updateProperty = async (req, res) => {
     try {
         const { id } = req.params;

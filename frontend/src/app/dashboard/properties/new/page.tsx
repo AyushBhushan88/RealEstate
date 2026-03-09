@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { apiFetch } from '../../lib/api';
-import styles from '../dashboard.module.css';
+import { apiFetch } from '../../../../lib/api';
+import styles from '../../../dashboard.module.css';
 
 export default function NewProperty() {
   const router = useRouter();

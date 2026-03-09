@@ -9,3 +9,4 @@ const upload = multer({
 });
 
 export const uploadMedia = upload.array('files', 10); // Allow up to 10 files
+export default upload;

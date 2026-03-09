@@ -7,6 +7,7 @@ exports.signContract = exports.getMyContracts = exports.downloadContractPDF = ex
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const pdfService_1 = require("../lib/pdfService");
 const notificationService_1 = require("../lib/notificationService");
+const auditService_1 = require("../lib/auditService");
 const createContract = async (req, res) => {
     try {
         const { propertyId, clientId, type, startDate, endDate, amount } = req.body;
@@ -143,6 +144,14 @@ const signContract = async (req, res) => {
             title: 'Contract Signed!',
             message: `${updatedContract.client.profile?.firstName} signed the contract for "${updatedContract.property.title}".`,
             link: '/dashboard/contracts'
+        });
+        // Audit Log
+        await (0, auditService_1.createAuditLog)({
+            userId,
+            action: 'CONTRACT_SIGNED',
+            entity: 'Contract',
+            entityId: id,
+            details: { signature }
         });
         res.json({ message: 'Contract signed successfully', contract: updatedContract });
     }

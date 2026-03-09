@@ -5,7 +5,9 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../../../components/Navbar';
 import InquiryForm from '../../../components/InquiryForm';
+import BookingForm from '../../../components/BookingForm';
 import { apiFetch } from '../../../lib/api';
+import { useAuth } from '../../../context/AuthContext';
 import styles from '../details.module.css';
 
 interface Property {
@@ -22,6 +24,7 @@ interface Property {
   type: string;
   listingType: string;
   media: { url: string }[];
+  isFavorited?: boolean;
   agent: {
     email: string;
     profile: {
@@ -36,6 +39,7 @@ interface Property {
 export default function PropertyDetail() {
   const { id } = useParams();
   const router = useRouter();
+  const { user } = useAuth();
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -53,6 +57,26 @@ export default function PropertyDetail() {
 
     if (id) fetchProperty();
   }, [id]);
+
+  const toggleFavorite = async () => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+
+    if (!property) return;
+
+    try {
+      const result = await apiFetch('/favorites/toggle', {
+        method: 'POST',
+        body: JSON.stringify({ propertyId: property.id }),
+      });
+
+      setProperty(prev => prev ? { ...prev, isFavorited: result.isFavorited } : null);
+    } catch (error) {
+      console.error('Failed to toggle favorite', error);
+    }
+  };
 
   if (loading) return (
     <div className="page-wrapper">
@@ -93,8 +117,17 @@ export default function PropertyDetail() {
           {/* Main Info */}
           <div className={styles.mainInfo}>
             <div className={styles.header}>
-              <div>
-                <h1 className={styles.title}>{property.title}</h1>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <h1 className={styles.title}>{property.title}</h1>
+                  <button 
+                    className={`${styles.favoriteButton} ${property.isFavorited ? styles.isFavorited : ''}`}
+                    onClick={toggleFavorite}
+                    title={property.isFavorited ? "Remove from favorites" : "Add to favorites"}
+                  >
+                    {property.isFavorited ? 'â¤ï¸' : 'â™¡'}
+                  </button>
+                </div>
                 <p className={styles.location}>
                   <span>ðŸ“</span> {property.address}, {property.city}, {property.state}
                 </p>
@@ -154,6 +187,11 @@ export default function PropertyDetail() {
               <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
                 <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Contact Agent</h3>
                 <InquiryForm propertyId={property.id} />
+              </div>
+
+              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem', marginTop: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Schedule a Viewing</h3>
+                <BookingForm propertyId={property.id} />
               </div>
             </div>
           </aside>

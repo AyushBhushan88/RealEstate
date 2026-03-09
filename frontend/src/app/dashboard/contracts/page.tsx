@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../context/AuthContext';
-import { apiFetch } from '../../lib/api';
-import { useToast } from '../../context/ToastContext';
-import styles from '../dashboard.module.css';
+import { useAuth } from '../../../context/AuthContext';
+import { apiFetch } from '../../../lib/api';
+import { useToast } from '../../../context/ToastContext';
+import styles from '../../dashboard.module.css';
 
 interface Contract {
   id: string;

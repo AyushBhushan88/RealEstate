@@ -70,13 +70,14 @@ export const createProperty = async (req: Request, res: Response) => {
 export const getProperties = async (req: Request, res: Response) => {
   try {
     const { type, listingType, minPrice, maxPrice, city, bedrooms, bathrooms, minSqft } = req.query;
+    const userId = (req as any).user?.userId;
 
     const properties = await prisma.property.findMany({
       where: {
         status: 'ACTIVE',
         ...(type && { type: type as any }),
         ...(listingType && { listingType: listingType as any }),
-        ...(city && { city: { contains: city as string, mode: 'insensitive' } }),
+        ...(city && { city: { contains: city as string } }),
         price: {
           ...(minPrice && { gte: parseFloat(minPrice as string) }),
           ...(maxPrice && { lte: parseFloat(maxPrice as string) }),
@@ -88,12 +89,22 @@ export const getProperties = async (req: Request, res: Response) => {
       include: {
         media: {
           where: { isMain: true }
-        }
+        },
+        favoritedBy: userId ? {
+          where: { userId }
+        } : false
       },
       orderBy: { createdAt: 'desc' }
     });
 
-    res.json(properties);
+    // Map properties to include isFavorited boolean
+    const result = properties.map(property => ({
+      ...property,
+      isFavorited: userId ? (property as any).favoritedBy.length > 0 : false,
+      favoritedBy: undefined // remove the relation data from output
+    }));
+
+    res.json(result);
   } catch (error) {
     console.error('Fetch properties error:', error);
     res.status(500).json({ error: 'Failed to fetch properties' });
@@ -103,6 +114,7 @@ export const getProperties = async (req: Request, res: Response) => {
 export const getPropertyById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params as { id: string };
+    const userId = (req as any).user?.userId;
 
     const property = await prisma.property.findUnique({
       where: { id },
@@ -119,7 +131,10 @@ export const getPropertyById = async (req: Request, res: Response) => {
             profile: true
           }
         },
-        media: true
+        media: true,
+        favoritedBy: userId ? {
+          where: { userId }
+        } : false
       }
     });
 
@@ -127,14 +142,22 @@ export const getPropertyById = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Property not found' });
     }
 
+    // Map result to include isFavorited boolean
+    const result = {
+      ...property,
+      isFavorited: userId ? (property as any).favoritedBy.length > 0 : false,
+      favoritedBy: undefined // remove the relation data from output
+    };
+
     // Increment view count asynchronously
     prisma.property.update({
       where: { id },
       data: { views: { increment: 1 } }
     }).catch(err => console.error('Error incrementing property views:', err));
 
-    res.json(property);
+    res.json(result);
   } catch (error) {
+    console.error('Fetch property by ID error:', error);
     res.status(500).json({ error: 'Failed to fetch property' });
   }
 };

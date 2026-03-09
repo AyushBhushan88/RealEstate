@@ -7,6 +7,7 @@ const router = (0, express_1.Router)();
 // Public routes
 router.get('/', propertyController_1.getProperties);
 router.get('/:id', propertyController_1.getPropertyById);
+router.post('/:id/view', propertyController_1.recordPropertyView);
 // Protected routes (Only Agents and Admins can create/manage properties)
 router.post('/', authMiddleware_1.authenticate, (0, authMiddleware_1.authorize)(['AGENT', 'ADMIN']), propertyController_1.createProperty);
 router.patch('/:id', authMiddleware_1.authenticate, (0, authMiddleware_1.authorize)(['AGENT', 'ADMIN']), propertyController_1.updateProperty);

@@ -13,4 +13,5 @@ const upload = (0, multer_1.default)({
     }
 });
 exports.uploadMedia = upload.array('files', 10); // Allow up to 10 files
+exports.default = upload;
 //# sourceMappingURL=uploadMiddleware.js.map

@@ -7,13 +7,13 @@ import {
   deleteProperty,
   recordPropertyView
 } from '../controllers/propertyController';
-import { authenticate, authorize } from '../middleware/authMiddleware';
+import { authenticate, authorize, optionalAuthenticate } from '../middleware/authMiddleware';
 
 const router = Router();
 
-// Public routes
-router.get('/', getProperties);
-router.get('/:id', getPropertyById);
+// Public routes (with optional auth to show favorites/personalized data)
+router.get('/', optionalAuthenticate, getProperties);
+router.get('/:id', optionalAuthenticate, getPropertyById);
 router.post('/:id/view', recordPropertyView);
 
 // Protected routes (Only Agents and Admins can create/manage properties)
