@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 import propertyRoutes from './routes/propertyRoutes';
 import mediaRoutes from './routes/mediaRoutes';
+import inquiryRoutes from './routes/inquiryRoutes';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/media', mediaRoutes);
+app.use('/api/inquiries', inquiryRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {

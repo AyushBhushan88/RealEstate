@@ -2,56 +2,27 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Navbar from "../components/Navbar";
 import styles from "./page.module.css";
 
 export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
-  const { user, logout } = useAuth();
+  const [searchCity, setSearchCity] = useState("");
+  const router = useRouter();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchCity.trim()) {
+      router.push(`/properties?city=${encodeURIComponent(searchCity.trim())}`);
+    } else {
+      router.push("/properties");
+    }
+  };
 
   return (
     <div className={styles.page}>
-      <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
-        <div className={styles.logo}>
-          <span className={styles.logoSpan}>REMS</span>
-          Platform
-        </div>
-        <nav className={styles.nav}>
-          <Link href="#listings" className={styles.navLink}>Listings</Link>
-          <Link href="#agents" className={styles.navLink}>Agents</Link>
-          <Link href="#about" className={styles.navLink}>About us</Link>
-        </nav>
-        <div className={styles.authGroup}>
-          {user ? (
-            <>
-              <span className={styles.welcomeText}>
-                Hello, {user.profile?.firstName || user.email}
-              </span>
-              <button onClick={logout} className="btn-outline" style={{ ...(scrolled ? {} : { color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }) }}>
-                Log out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="btn-outline" style={{ ...(scrolled ? {} : { color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }) }}>
-                Log in
-              </Link>
-              <Link href="/signup" className="btn-primary">
-                Sign up
-              </Link>
-            </>
-          )}
-        </div>
-      </header>
+      <Navbar transparent />
 
       <main>
         {/* Hero Section */}
@@ -66,7 +37,7 @@ export default function Home() {
             />
             <div className={styles.heroOverlay} />
           </div>
-          
+
           <div className={`${styles.heroContent} animate-fade-in`}>
             <div className={styles.badge}>✨ The ultimate platform for real estate</div>
             <h1 className={styles.title}>
@@ -76,16 +47,18 @@ export default function Home() {
               From seamless property listings to secure digital agreements, REMS empowers agents, owners, and buyers to connect and close deals faster.
             </p>
 
-            <div className={styles.searchContainer}>
+            <form className={styles.searchContainer} onSubmit={handleSearch}>
               <input 
                 type="text" 
-                placeholder="Search properties, neighborhoods, or agents..." 
+                placeholder="Search properties by city..." 
                 className={styles.searchInput}
+                value={searchCity}
+                onChange={(e) => setSearchCity(e.target.value)}
               />
-              <button className={`btn-primary ${styles.searchBtn}`}>
+              <button type="submit" className={`btn-primary ${styles.searchBtn}`}>
                 Search
               </button>
-            </div>
+            </form>
           </div>
         </section>
 

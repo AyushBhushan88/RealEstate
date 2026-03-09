@@ -1,0 +1,177 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.backBtn:hover {
+  color: var(--primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(2, 200px);
+  gap: 1rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.mainImage {
+  grid-row: 1 / span 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.subImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 1.125rem;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.quickFeatures {
+  display: flex;
+  gap: 2.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.featureLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.featureValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.descriptionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.description {
+  line-height: 1.8;
+  color: #4b5563;
+  font-size: 1.125rem;
+  white-space: pre-line;
+}
+
+/* Sidebar / Agent Card */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.agentCard {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 100px;
+}
+
+.agentHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.agentAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--primary-light);
+}
+
+.agentName {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.agentRole {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.contactBtn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .agentCard {
+    position: static;
+  }
+}

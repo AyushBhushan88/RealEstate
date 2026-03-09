@@ -7,7 +7,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -41,6 +40,14 @@ enum ListingType {
   RENTAL
 }
 
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CLOSED
+  ARCHIVED
+}
+
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
@@ -52,6 +59,7 @@ model User {
   profile       Profile?
   properties    Property[] @relation("AgentProperties")
   ownedProperties Property[] @relation("OwnerProperties")
+  inquiries     Inquiry[]
 }
 
 model Profile {
@@ -95,6 +103,7 @@ model Property {
   owner         User?         @relation("OwnerProperties", fields: [ownerId], references: [id])
   
   media         Media[]
+  inquiries     Inquiry[]
   
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
@@ -116,4 +125,25 @@ model Media {
   updatedAt   DateTime @updatedAt
 
   @@index([propertyId])
+}
+
+model Inquiry {
+  id          String        @id @default(cuid())
+  propertyId  String
+  property    Property      @relation(fields: [propertyId], references: [id])
+  
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id])
+  
+  name        String        // Guest name if not logged in
+  email       String        // Guest email if not logged in
+  phone       String?
+  message     String
+  status      InquiryStatus @default(NEW)
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([propertyId])
+  @@index([userId])
 }

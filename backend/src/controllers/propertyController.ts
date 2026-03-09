@@ -64,18 +64,21 @@ export const createProperty = async (req: Request, res: Response) => {
 
 export const getProperties = async (req: Request, res: Response) => {
   try {
-    const { type, listingType, minPrice, maxPrice, city } = req.query;
+    const { type, listingType, minPrice, maxPrice, city, bedrooms, bathrooms, minSqft } = req.query;
 
     const properties = await prisma.property.findMany({
       where: {
         status: 'ACTIVE',
         ...(type && { type: type as any }),
         ...(listingType && { listingType: listingType as any }),
-        ...(city && { city: city as string }),
+        ...(city && { city: { contains: city as string, mode: 'insensitive' } }),
         price: {
           ...(minPrice && { gte: parseFloat(minPrice as string) }),
           ...(maxPrice && { lte: parseFloat(maxPrice as string) }),
-        }
+        },
+        ...(bedrooms && { bedrooms: { gte: parseInt(bedrooms as string) } }),
+        ...(bathrooms && { bathrooms: { gte: parseFloat(bathrooms as string) } }),
+        ...(minSqft && { squareFeet: { gte: parseInt(minSqft as string) } }),
       },
       include: {
         media: {
@@ -87,6 +90,7 @@ export const getProperties = async (req: Request, res: Response) => {
 
     res.json(properties);
   } catch (error) {
+    console.error('Fetch properties error:', error);
     res.status(500).json({ error: 'Failed to fetch properties' });
   }
 };

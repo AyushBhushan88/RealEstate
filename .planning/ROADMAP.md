@@ -32,11 +32,47 @@
   - Endpoints to create, read, update, and delete property listings.
 - [x] **[P1-M3-02] Media Upload Integration**
   - Integrate Cloudinary for property images.
-- [ ] **[P1-M3-03] Agent Dashboard (Core)**
+- [x] **[P1-M3-03] Agent Dashboard (Core)**
   - UI for Agents to create and manage their listings.
   - Integration with Media Upload UI.
-- [ ] **[P1-M3-04] Public Property Gallery**
-  - A landing page showing available properties with basic search/filtering [SRCH-01].
+
+## Milestone 4: Search & Discovery
+*Focus: Delivering [SRCH-01] and [LIST-04].*
+
+- [x] **[P1-M4-01] Public Property Gallery**
+  - A landing page showing available properties with basic search/filtering.
+- [x] **[P1-M4-02] Advanced Filtering System**
+  - Search by location, price range, type, and features.
+- [x] **[P1-M4-03] Property Detail Pages**
+  - Individual pages for each property showing all details, images, and agent info.
+
+## Milestone 5: Lead Management & Inquiries
+*Focus: Delivering [BOOK-01] and [NOTIF-01].*
+
+- [x] **[P1-M5-01] Inquiry System (Backend)**
+  - Endpoints to submit property inquiries and contact requests.
+- [x] **[P1-M5-02] Agent Lead Dashboard**
+  - A view for agents to see incoming leads and messages.
+- [ ] **[P1-M5-03] Notification System**
+  - Real-time or email notifications for new inquiries.
+
+# Phase 2: Transaction & Lease Management (Proposed)
+
+**Goal:** Enable digital deal closing, document management, and transaction tracking.
+
+## Milestone 1: Lease Agreements & Digital Signatures
+- [ ] **[P2-M1-01] Document Template Engine**
+  - Generate PDF lease agreements and sales contracts.
+- [ ] **[P2-M1-02] E-Signature Integration**
+  - Integrate with DocuSign or HelloSign API.
+- [ ] **[P2-M1-03] Tenant Onboarding Flow**
+  - Profile verification and lease signing UI.
+
+## Milestone 2: Payment Processing
+- [ ] **[P2-M2-01] Stripe Integration**
+  - Process deposits, rent payments, and commissions.
+- [ ] **[P2-M2-02] Invoicing System**
+  - Automated recurring invoices for rentals.
 
 ## Success Criteria for Phase 1
 1.  Users can sign up and are assigned a specific role.
