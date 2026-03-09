@@ -8,6 +8,7 @@ import propertyRoutes from './routes/propertyRoutes';
 import mediaRoutes from './routes/mediaRoutes';
 import inquiryRoutes from './routes/inquiryRoutes';
 import contractRoutes from './routes/contractRoutes';
+import paymentRoutes from './routes/paymentRoutes';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/api/properties', propertyRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/contracts', contractRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {

@@ -71,6 +71,19 @@ export default function ContractsPage() {
     }
   };
 
+  const handlePay = async (contractId: string) => {
+    try {
+      const data = await apiFetch('/payments/create-session', {
+        method: 'POST',
+        body: JSON.stringify({ contractId, type: 'DEPOSIT' }),
+      });
+      window.location.href = data.url;
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Failed to start payment process');
+    }
+  };
+
   if (!user) return null;
 
   return (
@@ -132,6 +145,15 @@ export default function ContractsPage() {
                 >
                   ðŸ“¥ PDF
                 </button>
+                {(contract.status === 'PENDING_SIGNATURE' || contract.status === 'DRAFT') && (
+                  <button 
+                    onClick={() => handlePay(contract.id)}
+                    className="btn-primary" 
+                    style={{ padding: '0.4rem', fontSize: '0.75rem', background: '#059669' }}
+                  >
+                    ðŸ’³ Pay
+                  </button>
+                )}
                 <button 
                   className="btn-primary" 
                   style={{ padding: '0.4rem', fontSize: '0.75rem' }}
