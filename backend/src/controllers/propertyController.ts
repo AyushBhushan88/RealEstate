@@ -127,9 +127,28 @@ export const getPropertyById = async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Property not found' });
     }
 
+    // Increment view count asynchronously
+    prisma.property.update({
+      where: { id },
+      data: { views: { increment: 1 } }
+    }).catch(err => console.error('Error incrementing property views:', err));
+
     res.json(property);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch property' });
+  }
+};
+
+export const recordPropertyView = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params as { id: string };
+    await prisma.property.update({
+      where: { id },
+      data: { views: { increment: 1 } }
+    });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to record view' });
   }
 };
 

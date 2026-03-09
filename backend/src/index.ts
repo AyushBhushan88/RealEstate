@@ -10,6 +10,9 @@ import inquiryRoutes from './routes/inquiryRoutes';
 import contractRoutes from './routes/contractRoutes';
 import paymentRoutes from './routes/paymentRoutes';
 import notificationRoutes from './routes/notificationRoutes';
+import ownerRoutes from './routes/ownerRoutes';
+import adminRoutes from './routes/adminRoutes';
+import verificationRoutes from './routes/verificationRoutes';
 
 dotenv.config();
 
@@ -34,6 +37,9 @@ app.use('/api/inquiries', inquiryRoutes);
 app.use('/api/contracts', contractRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/owners', ownerRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/verification', verificationRoutes);
 
 // Basic Route
 app.get('/', (req: Request, res: Response) => {

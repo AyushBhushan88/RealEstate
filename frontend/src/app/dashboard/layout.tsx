@@ -14,14 +14,16 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const { logout, user } = useAuth();
 
-  const navItems = [
-    { name: 'Overview', path: '/dashboard', icon: 'ðŸ“Š' },
-    { name: 'My Properties', path: '/dashboard/properties', icon: 'ðŸ' },
-    { name: 'Contracts', path: '/dashboard/contracts', icon: 'ðŸ“ƒ' },
-    { name: 'Messages', path: '/dashboard/messages', icon: 'ðŸ’¬' },
-    { name: 'Transactions', path: '/dashboard/transactions', icon: 'ðŸ’³' },
-    { name: 'Settings', path: '/dashboard/settings', icon: 'âš™ï¸' },
+  const allNavItems = [
+    { name: 'Overview', path: '/dashboard', icon: 'ðŸ“Š', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
+    { name: 'My Properties', path: '/dashboard/properties', icon: 'ðŸ', roles: ['ADMIN', 'AGENT'] },
+    { name: 'Contracts', path: '/dashboard/contracts', icon: 'ðŸ“ƒ', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
+    { name: 'Messages', path: '/dashboard/messages', icon: 'ðŸ’¬', roles: ['ADMIN', 'AGENT'] },
+    { name: 'Transactions', path: '/dashboard/transactions', icon: 'ðŸ’³', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
+    { name: 'Settings', path: '/dashboard/settings', icon: 'âš™ï¸', roles: ['ADMIN', 'AGENT', 'OWNER', 'BUYER', 'TENANT'] },
   ];
+
+  const navItems = allNavItems.filter(item => user && item.roles.includes(user.role));
 
   if (!user) return null;
 

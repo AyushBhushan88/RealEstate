@@ -74,26 +74,26 @@
 - [x] **[P2-M2-02] Invoicing & Transaction System**
   - Automated tracking and Transactions Dashboard.
 
-# Phase 3: Property Owner & Account Management (Active)
+# Phase 3: Property Owner & Account Management (Complete)
 
 **Goal:** Provide property owners with performance insights and automate commission management for account managers.
 
 ## Milestone 1: Property Owner Dashboard [ANLY-01]
-- [ ] **[P3-M1-01] Owner Performance API**
+- [x] **[P3-M1-01] Owner Performance API**
   - Aggregate data on views, inquiries, and revenue for owned properties.
-- [ ] **[P3-M1-02] Owner UI**
+- [x] **[P3-M1-02] Owner UI**
   - Dedicated dashboard for owners to track their property portfolio.
 
 ## Milestone 2: Account Management & Commissions
-- [ ] **[P3-M2-01] Commission Split Logic**
+- [x] **[P3-M2-01] Commission Split Logic**
   - Automated calculation of agent vs. agency splits on successful payments.
-- [ ] **[P3-M2-02] Account Manager View**
+- [x] **[P3-M2-02] Account Manager View**
   - Dashboard to approve/track payouts and financial reports.
 
 ## Milestone 3: Profile Verification & Security
-- [ ] **[P3-M3-01] Document Verification Service**
-  - Integration for identity/income verification (e.g., using a service or manual upload).
-- [ ] **[P3-M3-02] Enhanced Security Logs**
+- [x] **[P3-M3-01] Document Verification Service**
+  - Integration for identity/income verification.
+- [x] **[P3-M3-02] Enhanced Security Logs**
   - Audit trail for all financial transactions and contract changes.
 
 ## Success Criteria for Phase 1

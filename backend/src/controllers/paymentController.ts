@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import stripe from '../lib/stripe';
 import prisma from '../lib/prisma';
 import { createNotification, NotificationType } from '../lib/notificationService';
+import { createAuditLog } from '../lib/auditService';
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
   try {
@@ -83,13 +84,54 @@ export const handleWebhook = async (req: Request, res: Response) => {
       }
     });
 
-    // If it's a signed lease deposit, activate contract
+    // Create Commission Splits if applicable (70% Agent, 30% Agency/System)
     if (type === 'DEPOSIT' || type === 'RENT') {
+      const totalAmount = session.amount_total / 100;
+      const agentAmount = totalAmount * 0.7;
+      const agencyAmount = totalAmount * 0.3;
+
+      // Agent portion
+      await prisma.transaction.create({
+        data: {
+          contractId,
+          userId, // Payer remains same
+          recipientId: transaction.contract?.property.agentId,
+          amount: agentAmount,
+          type: 'COMMISSION',
+          status: 'COMPLETED',
+          parentId: transaction.id,
+          metadata: { split: '70%', role: 'AGENT' }
+        }
+      });
+
+      // Agency portion (System fee)
+      await prisma.transaction.create({
+        data: {
+          contractId,
+          userId,
+          amount: agencyAmount,
+          type: 'FEE',
+          status: 'COMPLETED',
+          parentId: transaction.id,
+          metadata: { split: '30%', role: 'AGENCY' }
+        }
+      });
+
+      // Activate contract
       await prisma.contract.update({
         where: { id: contractId },
         data: { status: 'ACTIVE' }
       });
     }
+
+    // Audit Log for the main transaction
+    await createAuditLog({
+      userId,
+      action: 'PAYMENT_COMPLETED',
+      entity: 'Transaction',
+      entityId: transaction.id,
+      details: { contractId, type, amount: transaction.amount }
+    });
 
     // Notify Agent
     if (transaction.contract) {

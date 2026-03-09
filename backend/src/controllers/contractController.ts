@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import prisma from '../lib/prisma';
 import { generatePDF, getLeaseTemplate } from '../lib/pdfService';
 import { createNotification, NotificationType } from '../lib/notificationService';
+import { createAuditLog } from '../lib/auditService';
 
 export const createContract = async (req: Request, res: Response) => {
   try {
@@ -153,6 +154,15 @@ export const signContract = async (req: Request, res: Response) => {
       title: 'Contract Signed!',
       message: `${updatedContract.client.profile?.firstName} signed the contract for "${updatedContract.property.title}".`,
       link: '/dashboard/contracts'
+    });
+
+    // Audit Log
+    await createAuditLog({
+      userId,
+      action: 'CONTRACT_SIGNED',
+      entity: 'Contract',
+      entityId: id,
+      details: { signature }
     });
 
     res.json({ message: 'Contract signed successfully', contract: updatedContract });

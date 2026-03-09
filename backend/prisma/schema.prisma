@@ -93,7 +93,14 @@ model User {
   inquiries     Inquiry[]
   contracts     Contract[] @relation("ClientContracts")
   transactions  Transaction[]
+  receivedTransactions Transaction[] @relation("TransactionRecipient")
   notifications Notification[]
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
 }
 
 model Profile {
@@ -105,8 +112,25 @@ model Profile {
   phoneNumber String?
   avatarUrl   String?
   bio         String?
+  isVerified  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
+  documents   VerificationDocument[]
+}
+
+model VerificationDocument {
+  id          String             @id @default(cuid())
+  profileId   String
+  profile     Profile            @relation(fields: [profileId], references: [id])
+  type        String             // ID_CARD, PASSPORT, PAY_STUB
+  url         String
+  status      VerificationStatus @default(PENDING)
+  notes       String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@index([profileId])
 }
 
 model Property {
@@ -215,8 +239,11 @@ model Transaction {
   contractId    String?
   contract      Contract?         @relation(fields: [contractId], references: [id])
   
-  userId        String
+  userId        String            // Payer (User who initiated the transaction)
   user          User              @relation(fields: [userId], references: [id])
+
+  recipientId   String?           // User who receives the funds (Agent or Owner)
+  recipient     User?             @relation("TransactionRecipient", fields: [recipientId], references: [id])
   
   amount        Decimal           @db.Decimal(12, 2)
   currency      String            @default("USD")
@@ -225,12 +252,20 @@ model Transaction {
   
   stripeId      String?           @unique
   paymentMethod String?           // card, bank_transfer, etc.
+
+  parentId      String?           // For split transactions
+  parent        Transaction?      @relation("TransactionSplits", fields: [parentId], references: [id])
+  splits        Transaction[]     @relation("TransactionSplits")
+
+  metadata      Json?             // Additional info (e.g., split percentages)
   
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
 
   @@index([contractId])
   @@index([userId])
+  @@index([recipientId])
+  @@index([parentId])
 }
 
 model Notification {
@@ -248,4 +283,19 @@ model Notification {
   updatedAt   DateTime         @updatedAt
 
   @@index([userId])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  action      String   // e.g., PAYMENT_COMPLETED, CONTRACT_SIGNED
+  entity      String   // e.g., Transaction, Contract
+  entityId    String
+  details     Json?
+  ipAddress   String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([entityId])
 }
