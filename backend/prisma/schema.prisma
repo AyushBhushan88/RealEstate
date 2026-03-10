@@ -82,6 +82,7 @@ enum NotificationType {
   BOOKING_CONFIRMED
   FAVORITE_NEW
   SAVED_SEARCH_MATCH
+  LEASE_EXPIRING
 }
 
 model User {
@@ -259,8 +260,11 @@ model Contract {
   content       String?        // JSON or URL to generated PDF
   signedAt      DateTime?
   startDate     DateTime?
-  endDate       DateTime?
+  endDate     DateTime?
   amount        Float
+
+  commissionRate Float         @default(70.0) // Percentage for the agent
+  serviceFeeRate Float         @default(30.0) // Percentage for the agency
   
   transactions  Transaction[]
   

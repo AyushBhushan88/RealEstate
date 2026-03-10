@@ -16,6 +16,7 @@ import verificationRoutes from './routes/verificationRoutes';
 import bookingRoutes from './routes/bookingRoutes';
 import favoriteRoutes from './routes/favoriteRoutes';
 import savedSearchRoutes from './routes/savedSearchRoutes';
+import { checkExpiringLeases, updateExpiredContracts } from './lib/leaseService';
 
 dotenv.config();
 
@@ -59,6 +60,18 @@ app.get('/health', (req: Request, res: Response) => {
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);
+  
+  // Initialize Lease Lifecycle Tracking
+  // Run checks every 24 hours
+  setInterval(() => {
+    console.log('[system]: Running lease expiry checks...');
+    checkExpiringLeases();
+    updateExpiredContracts();
+  }, 24 * 60 * 60 * 1000);
+
+  // Initial run on startup
+  checkExpiringLeases();
+  updateExpiredContracts();
 });
 
 export default app;

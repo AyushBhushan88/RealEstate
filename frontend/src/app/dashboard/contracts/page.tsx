@@ -28,6 +28,8 @@ interface Contract {
   };
 }
 
+import { FileText, PenTool, CreditCard, Download, Clock, AlertCircle } from 'lucide-react';
+
 export default function ContractsPage() {
   const { user } = useAuth();
   const { showToast } = useToast();
@@ -43,6 +45,29 @@ export default function ContractsPage() {
   useEffect(() => {
     fetchContracts();
   }, []);
+
+  const getDaysRemaining = (endDate: string) => {
+    const today = new Date();
+    const end = new Date(endDate);
+    const diffTime = end.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const getStatusStyle = (status: string, endDate?: string) => {
+    if (status === 'ACTIVE' && endDate) {
+      const days = getDaysRemaining(endDate);
+      if (days < 0) return { background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca' };
+      if (days <= 30) return { background: '#fffbeb', color: '#92400e', border: '1px solid #fde68a' };
+    }
+    
+    switch (status) {
+      case 'ACTIVE': return { background: '#f0fdf4', color: '#166534', border: '1px solid #bbf7d0' };
+      case 'SIGNED': return { background: '#eff6ff', color: '#1e40af', border: '1px solid #bfdbfe' };
+      case 'EXPIRED': return { background: '#f1f5f9', color: '#475569', border: '1px solid #e2e8f0' };
+      default: return {};
+    }
+  };
 
   const fetchContracts = async () => {
     try {
@@ -137,74 +162,94 @@ export default function ContractsPage() {
           <span>Property</span>
           <span>Client / Tenant</span>
           <span>Amount</span>
-          <span>Status</span>
+          <span>Status / Expiry</span>
           <span>Actions</span>
         </div>
 
         {loading ? (
-          <div style={{ padding: '2rem', textAlign: 'center' }}>Loading contracts...</div>
+          <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>Syncing contracts...</div>
         ) : contracts.length === 0 ? (
-          <div style={{ padding: '2rem', textAlign: 'center' }}>
-            No contracts found. Go to <Link href="/dashboard/messages" style={{ color: 'var(--primary)' }}>Leads</Link> to create one.
+          <div style={{ padding: '4rem', textAlign: 'center' }}>
+            <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>No digital contracts found.</p>
+            <Link href="/dashboard/messages" className="btn-outline">Initiate from Leads</Link>
           </div>
         ) : (
-          contracts.map((contract) => (
-            <div key={contract.id} className={styles.propertyRow} style={{ gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr 180px' }}>
-              <div>
-                <div style={{ fontWeight: 600 }}>{contract.property.title}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{contract.property.address}</div>
-              </div>
-              
-              <div>
-                <div style={{ fontWeight: 600 }}>{contract.client.profile?.firstName} {contract.client.profile?.lastName}</div>
-                <div style={{ fontSize: '0.85rem' }}>{contract.client.email}</div>
-              </div>
+          contracts.map((contract) => {
+            const daysLeft = contract.endDate ? getDaysRemaining(contract.endDate) : null;
+            
+            return (
+              <div key={contract.id} className={styles.propertyRow} style={{ gridTemplateColumns: '1.5fr 1.5fr 1fr 1fr 180px' }}>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{contract.property.title}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{contract.property.address}</div>
+                </div>
+                
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{contract.client.profile?.firstName} {contract.client.profile?.lastName}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{contract.client.email}</div>
+                </div>
 
-              <div style={{ fontWeight: 600 }}>
-                ${Number(contract.amount).toLocaleString()}
-                <div style={{ fontSize: '0.7rem', fontWeight: 400, color: 'var(--text-muted)' }}>
-                  {contract.type === 'RENTAL' ? '/ month' : 'Total'}
+                <div style={{ fontWeight: 600 }}>
+                  ${Number(contract.amount).toLocaleString()}
+                  <div style={{ fontSize: '0.7rem', fontWeight: 500, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                    {contract.type === 'RENTAL' ? '/ month' : 'Total'}
+                  </div>
+                </div>
+
+                <div>
+                  <span className={styles.statusBadge} style={getStatusStyle(contract.status, contract.endDate)}>
+                    {contract.status}
+                  </span>
+                  {contract.status === 'ACTIVE' && daysLeft !== null && (
+                    <div style={{ 
+                      fontSize: '0.75rem', 
+                      marginTop: '0.5rem', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '0.25rem',
+                      color: daysLeft <= 30 ? '#b45309' : 'var(--text-muted)',
+                      fontWeight: daysLeft <= 30 ? 600 : 400
+                    }}>
+                      <Clock size={12} />
+                      {daysLeft < 0 ? 'Expired' : `${daysLeft} days left`}
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button 
+                    onClick={() => handleDownload(contract.id)}
+                    className={styles.actionBtn} 
+                    title="Download PDF"
+                  >
+                    <Download size={16} />
+                  </button>
+                  
+                  {contract.client.id === user.id && (contract.status === 'DRAFT' || contract.status === 'PENDING_SIGNATURE') && (
+                    <button 
+                      onClick={() => setSigningContractId(contract.id)}
+                      className={styles.actionBtn} 
+                      style={{ borderColor: 'var(--foreground)', color: 'var(--foreground)' }}
+                      title="Sign Contract"
+                    >
+                      <PenTool size={16} />
+                    </button>
+                  )}
+
+                  {contract.status === 'SIGNED' && contract.client.id === user.id && (
+                    <button 
+                      onClick={() => handlePay(contract.id)}
+                      className={styles.actionBtn} 
+                      style={{ background: '#000', color: '#fff', borderColor: '#000' }}
+                      title="Make Payment"
+                    >
+                      <CreditCard size={16} />
+                    </button>
+                  )}
                 </div>
               </div>
-
-              <div>
-                <span className={`${styles.statusBadge}`}>
-                  {contract.status}
-                </span>
-              </div>
-
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                <button 
-                  onClick={() => handleDownload(contract.id)}
-                  className="btn-outline" 
-                  style={{ padding: '0.4rem', fontSize: '0.75rem' }}
-                  title="Download PDF"
-                >
-                  ðŸ“¥ PDF
-                </button>
-                
-                {contract.client.id === user.id && (contract.status === 'DRAFT' || contract.status === 'PENDING_SIGNATURE') && (
-                  <button 
-                    onClick={() => setSigningContractId(contract.id)}
-                    className="btn-primary" 
-                    style={{ padding: '0.4rem', fontSize: '0.75rem' }}
-                  >
-                    âœï¸ Sign
-                  </button>
-                )}
-
-                {contract.status === 'SIGNED' && (
-                  <button 
-                    onClick={() => handlePay(contract.id)}
-                    className="btn-primary" 
-                    style={{ padding: '0.4rem', fontSize: '0.75rem', background: '#059669', borderColor: '#059669' }}
-                  >
-                    ðŸ’³ Pay
-                  </button>
-                )}
-              </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
 

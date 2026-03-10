@@ -6,7 +6,7 @@ import { createAuditLog } from '../lib/auditService';
 
 export const createContract = async (req: Request, res: Response) => {
   try {
-    const { propertyId, clientId, type, startDate, endDate, amount } = req.body;
+    const { propertyId, clientId, type, startDate, endDate, amount, commissionRate, serviceFeeRate } = req.body;
     const agentId = (req as any).user.userId;
 
     const property = await prisma.property.findUnique({
@@ -31,6 +31,8 @@ export const createContract = async (req: Request, res: Response) => {
         startDate: new Date(startDate),
         endDate: new Date(endDate),
         amount,
+        commissionRate: commissionRate || 70.0,
+        serviceFeeRate: serviceFeeRate || 30.0,
         status: 'DRAFT'
       },
     });

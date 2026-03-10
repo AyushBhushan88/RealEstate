@@ -22,11 +22,24 @@ export default function NewContract() {
     startDate: '',
     endDate: '',
     amount: '',
+    commissionRate: '70',
+    serviceFeeRate: '30',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => {
+      const updated = { ...prev, [name]: value };
+      
+      // Auto-calculate service fee if commission is changed (to keep 100% total)
+      if (name === 'commissionRate') {
+        const val = parseFloat(value);
+        if (!isNaN(val) && val <= 100) {
+          updated.serviceFeeRate = (100 - val).toString();
+        }
+      }
+      return updated;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +55,11 @@ export default function NewContract() {
     try {
       await apiFetch('/contracts', {
         method: 'POST',
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          commissionRate: parseFloat(formData.commissionRate),
+          serviceFeeRate: parseFloat(formData.serviceFeeRate),
+        }),
       });
       router.push('/dashboard/contracts');
     } catch (err: any) {
@@ -97,6 +114,29 @@ export default function NewContract() {
               type="date" name="endDate" className="input-field" 
               value={formData.endDate} onChange={handleChange}
             />
+          </div>
+        </div>
+
+        <div className={styles.sectionTitle}>Financial Distribution (Commission Splits)</div>
+        <div className={styles.formGrid}>
+          <div className={styles.formGroup}>
+            <label className="input-label">Agent Commission (%)</label>
+            <input 
+              type="number" name="commissionRate" className="input-field" 
+              min="0" max="100" required
+              value={formData.commissionRate} onChange={handleChange}
+            />
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Percentage of fees paid to the Agent.</p>
+          </div>
+          
+          <div className={styles.formGroup}>
+            <label className="input-label">Agency Service Fee (%)</label>
+            <input 
+              type="number" name="serviceFeeRate" className="input-field" 
+              min="0" max="100" required
+              value={formData.serviceFeeRate} onChange={handleChange}
+            />
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Platform maintenance and agency cut.</p>
           </div>
         </div>
 

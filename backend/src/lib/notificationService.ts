@@ -7,6 +7,7 @@ export enum NotificationType {
   SYSTEM_ALERT = 'SYSTEM_ALERT',
   BOOKING_NEW = 'BOOKING_NEW',
   BOOKING_CONFIRMED = 'BOOKING_CONFIRMED',
+  LEASE_EXPIRING = 'LEASE_EXPIRING',
 }
 
 interface CreateNotificationParams {

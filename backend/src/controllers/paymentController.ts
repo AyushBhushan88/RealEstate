@@ -84,38 +84,49 @@ export const handleWebhook = async (req: Request, res: Response) => {
       }
     });
 
-    // Create Commission Splits if applicable (70% Agent, 30% Agency/System)
-    if (type === 'DEPOSIT' || type === 'RENT') {
+    // Create Commission Splits if applicable
+    if (type === 'DEPOSIT' || type === 'RENT' || type === 'SALE_PRICE') {
       const totalAmount = session.amount_total / 100;
-      const agentAmount = totalAmount * 0.7;
-      const agencyAmount = totalAmount * 0.3;
-
-      // Agent portion
-      await prisma.transaction.create({
-        data: {
-          contractId,
-          userId, // Payer remains same
-          recipientId: transaction.contract?.property.agentId,
-          amount: agentAmount,
-          type: 'COMMISSION',
-          status: 'COMPLETED',
-          parentId: transaction.id,
-          metadata: { split: '70%', role: 'AGENT' }
-        }
+      
+      // Fetch contract to get specific split rates
+      const fullContract = await prisma.contract.findUnique({
+        where: { id: contractId }
       });
 
-      // Agency portion (System fee)
-      await prisma.transaction.create({
-        data: {
-          contractId,
-          userId,
-          amount: agencyAmount,
-          type: 'FEE',
-          status: 'COMPLETED',
-          parentId: transaction.id,
-          metadata: { split: '30%', role: 'AGENCY' }
-        }
-      });
+      if (fullContract) {
+        const commissionRate = fullContract.commissionRate / 100;
+        const serviceFeeRate = fullContract.serviceFeeRate / 100;
+
+        const agentAmount = totalAmount * commissionRate;
+        const agencyAmount = totalAmount * serviceFeeRate;
+
+        // Agent portion
+        await prisma.transaction.create({
+          data: {
+            contractId,
+            userId, // Payer remains same
+            recipientId: transaction.contract?.property.agentId,
+            amount: Number(agentAmount.toFixed(2)),
+            type: 'COMMISSION',
+            status: 'COMPLETED',
+            parentId: transaction.id,
+            metadata: { split: `${fullContract.commissionRate}%`, role: 'AGENT' }
+          }
+        });
+
+        // Agency portion (System fee)
+        await prisma.transaction.create({
+          data: {
+            contractId,
+            userId,
+            amount: Number(agencyAmount.toFixed(2)),
+            type: 'FEE',
+            status: 'COMPLETED',
+            parentId: transaction.id,
+            metadata: { split: `${fullContract.serviceFeeRate}%`, role: 'AGENCY' }
+          }
+        });
+      }
 
       // Activate contract
       await prisma.contract.update({
