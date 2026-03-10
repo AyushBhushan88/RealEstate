@@ -1,6 +1,6 @@
 .dashboardContainer {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 260px 1fr;
   min-height: 100vh;
   background-color: var(--background);
 }
@@ -8,7 +8,7 @@
 .sidebar {
   background-color: var(--surface);
   border-right: 1px solid var(--border);
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -17,14 +17,16 @@
 }
 
 .sidebarLogo {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
   color: var(--foreground);
+  letter-spacing: -0.05em;
+  padding-left: 1rem;
 }
 
 .sidebarLogo span {
-  color: var(--primary);
+  font-weight: 900;
 }
 
 .navSection {
@@ -35,98 +37,108 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
   color: var(--text-muted);
   font-weight: 500;
-  transition: all 0.2s ease;
-  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 0.25rem;
 }
 
 .navLink:hover {
   background-color: var(--primary-light);
-  color: var(--primary);
+  color: var(--foreground);
 }
 
 .navLinkActive {
   background-color: var(--primary-light);
-  color: var(--primary);
+  color: var(--foreground);
+  font-weight: 600;
 }
 
 .mainContent {
-  padding: 2.5rem 3rem;
-  max-width: 1200px;
+  padding: 3rem 4rem;
+  max-width: 1400px;
   width: 100%;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2.5rem;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .title {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   font-weight: 700;
   color: var(--foreground);
+  letter-spacing: -0.03em;
 }
 
 .subtitle {
   color: var(--text-muted);
-  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
 }
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
 
 .statCard {
   background: var(--surface);
-  padding: 1.5rem;
-  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
 }
 
 .statLabel {
   color: var(--text-muted);
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .statValue {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
 }
 
 .propertyList {
   background: var(--surface);
-  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
 }
 
 .tableHeader {
   display: grid;
   grid-template-columns: 80px 2fr 1fr 1fr 100px;
   padding: 1rem 1.5rem;
-  background: var(--background);
+  background: var(--surface-hover);
   border-bottom: 1px solid var(--border);
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--text-muted);
 }
 
 .propertyRow {
   display: grid;
   grid-template-columns: 80px 2fr 1fr 1fr 100px;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   align-items: center;
   border-bottom: 1px solid var(--border);
   transition: background 0.2s ease;
@@ -137,68 +149,78 @@
 }
 
 .propertyRow:hover {
-  background: var(--primary-light);
+  background: var(--surface-hover);
 }
 
 .propertyImg {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-sm);
   object-fit: cover;
-  background: #eee;
+  background: var(--primary-light);
 }
 
 .propertyName {
   font-weight: 600;
+  font-size: 0.95rem;
   color: var(--foreground);
 }
 
 .propertyAddress {
   font-size: 0.8125rem;
   color: var(--text-muted);
+  margin-top: 0.125rem;
 }
 
 .statusBadge {
   display: inline-flex;
-  padding: 0.25rem 0.75rem;
-  border-radius: 99px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.65rem;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.statusActive { background: #dcfce7; color: #166534; }
-.statusDraft { background: #f1f5f9; color: #475569; }
-.statusPending { background: #fef9c3; color: #854d0e; }
+.statusActive { background: var(--primary-light); color: var(--foreground); border: 1px solid var(--border); }
+.statusDraft { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+.statusPending { background: #000; color: #fff; }
+
+@media (prefers-color-scheme: dark) {
+  .statusPending { background: #fff; color: #000; }
+}
 
 .actionBtn {
   background: transparent;
-  border: none;
+  border: 1px solid var(--border);
   color: var(--text-muted);
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.4rem;
   border-radius: var(--radius-sm);
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .actionBtn:hover {
-  background: var(--border);
+  border-color: var(--foreground);
   color: var(--foreground);
 }
 
 /* Form Styles */
 .formCard {
   background: var(--surface);
-  padding: 2.5rem;
-  border-radius: var(--radius-lg);
+  padding: 3rem;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
+  max-width: 800px;
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .fullWidth {
@@ -206,10 +228,13 @@
 }
 
 .sectionTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin: 2rem 0 1rem;
-  padding-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 3rem 0 1.5rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -221,10 +246,18 @@
   .dashboardContainer {
     grid-template-columns: 80px 1fr;
   }
+  .mainContent {
+    padding: 2rem;
+  }
   .sidebar span:not(.sidebarLogo span) {
     display: none;
   }
   .sidebarLogo {
+    padding-left: 0;
     text-align: center;
+  }
+  .navLink {
+    justify-content: center;
+    padding: 1rem 0;
   }
 }

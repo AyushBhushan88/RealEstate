@@ -9,6 +9,7 @@ import BookingForm from '../../../components/BookingForm';
 import { apiFetch } from '../../../lib/api';
 import { useAuth } from '../../../context/AuthContext';
 import styles from '../details.module.css';
+import { ChevronLeft, Heart, MapPin, BedDouble, Bath, Square, Home, Mail, Phone } from 'lucide-react';
 
 interface Property {
   id: string;
@@ -82,7 +83,7 @@ export default function PropertyDetail() {
     <div className="page-wrapper">
       <Navbar />
       <div className={styles.container} style={{ textAlign: 'center', padding: '10rem' }}>
-        <h2>Loading property details...</h2>
+        <h2 style={{ fontWeight: 500, color: 'var(--text-muted)' }}>Loading Asset Details...</h2>
       </div>
     </div>
   );
@@ -91,7 +92,7 @@ export default function PropertyDetail() {
     <div className="page-wrapper">
       <Navbar />
       <div className={styles.container} style={{ textAlign: 'center', padding: '10rem' }}>
-        <h2>Property not found.</h2>
+        <h2 style={{ marginBottom: '2rem' }}>Property not found.</h2>
         <Link href="/properties" className="btn-outline">Back to Listings</Link>
       </div>
     </div>
@@ -101,16 +102,28 @@ export default function PropertyDetail() {
     <div className="page-wrapper">
       <Navbar />
       
-      <main className={styles.container}>
+      <main className={`${styles.container} fade-in-up`}>
         <Link href="/properties" className={styles.backBtn}>
-          â† Back to listings
+          <ChevronLeft size={16} /> Back to listings
         </Link>
 
         {/* Hero Gallery */}
         <div className={styles.gallery}>
-          <img src={property.media[0]?.url || 'https://via.placeholder.com/800x600'} className={styles.mainImage} alt={property.title} />
-          <img src={property.media[1]?.url || property.media[0]?.url || 'https://via.placeholder.com/400x300'} className={styles.subImage} alt={property.title} />
-          <img src={property.media[2]?.url || property.media[0]?.url || 'https://via.placeholder.com/400x300'} className={styles.subImage} alt={property.title} />
+          <img 
+            src={property.media[0]?.url || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1600'} 
+            className={styles.mainImage} 
+            alt={property.title} 
+          />
+          <img 
+            src={property.media[1]?.url || property.media[0]?.url || 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800'} 
+            className={styles.subImage} 
+            alt={property.title} 
+          />
+          <img 
+            src={property.media[2]?.url || property.media[0]?.url || 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800'} 
+            className={styles.subImage} 
+            alt={property.title} 
+          />
         </div>
 
         <div className={styles.grid}>
@@ -118,46 +131,47 @@ export default function PropertyDetail() {
           <div className={styles.mainInfo}>
             <div className={styles.header}>
               <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                   <h1 className={styles.title}>{property.title}</h1>
                   <button 
                     className={`${styles.favoriteButton} ${property.isFavorited ? styles.isFavorited : ''}`}
                     onClick={toggleFavorite}
                     title={property.isFavorited ? "Remove from favorites" : "Add to favorites"}
                   >
-                    {property.isFavorited ? 'â¤ï¸' : 'â™¡'}
+                    <Heart size={20} fill={property.isFavorited ? "currentColor" : "none"} />
                   </button>
                 </div>
                 <p className={styles.location}>
-                  <span>ðŸ“</span> {property.address}, {property.city}, {property.state}
+                  <MapPin size={16} /> {property.address}, {property.city}, {property.state}
                 </p>
               </div>
-              <div className={styles.price}>
-                ${Number(property.price).toLocaleString()}
-              </div>
+            </div>
+
+            <div className={styles.price}>
+              ${Number(property.price).toLocaleString()}
             </div>
 
             <div className={styles.quickFeatures}>
               <div className={styles.feature}>
-                <span className={styles.featureLabel}>Bedrooms</span>
-                <span className={styles.featureValue}>{property.bedrooms}</span>
+                <span className={styles.featureLabel}>Beds</span>
+                <span className={styles.featureValue}><BedDouble size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} /> {property.bedrooms}</span>
               </div>
               <div className={styles.feature}>
-                <span className={styles.featureLabel}>Bathrooms</span>
-                <span className={styles.featureValue}>{property.bathrooms}</span>
+                <span className={styles.featureLabel}>Baths</span>
+                <span className={styles.featureValue}><Bath size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} /> {property.bathrooms}</span>
               </div>
               <div className={styles.feature}>
-                <span className={styles.featureLabel}>Square Feet</span>
-                <span className={styles.featureValue}>{property.squareFeet} sqft</span>
+                <span className={styles.featureLabel}>Area</span>
+                <span className={styles.featureValue}><Square size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} /> {property.squareFeet} <span style={{ fontSize: '0.8em', fontWeight: 500 }}>sqft</span></span>
               </div>
               <div className={styles.feature}>
-                <span className={styles.featureLabel}>Property Type</span>
-                <span className={styles.featureValue}>{property.type}</span>
+                <span className={styles.featureLabel}>Type</span>
+                <span className={styles.featureValue}><Home size={18} style={{ verticalAlign: 'middle', marginRight: '0.5rem' }} /> {property.type}</span>
               </div>
             </div>
 
             <div>
-              <h2 className={styles.descriptionTitle}>About this property</h2>
+              <h2 className={styles.descriptionTitle}>Overview</h2>
               <p className={styles.description}>{property.description}</p>
             </div>
           </div>
@@ -167,7 +181,7 @@ export default function PropertyDetail() {
             <div className={styles.agentCard}>
               <div className={styles.agentHeader}>
                 <img 
-                  src={property.agent.profile?.avatarUrl || 'https://via.placeholder.com/100'} 
+                  src={property.agent.profile?.avatarUrl || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200'} 
                   className={styles.agentAvatar} 
                   alt={property.agent.profile?.firstName} 
                 />
@@ -175,22 +189,30 @@ export default function PropertyDetail() {
                   <div className={styles.agentName}>
                     {property.agent.profile?.firstName} {property.agent.profile?.lastName}
                   </div>
-                  <div className={styles.agentRole}>Listing Agent</div>
+                  <div className={styles.agentRole}>Exclusive Agent</div>
                 </div>
               </div>
 
-              <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-                <div style={{ marginBottom: '0.5rem' }}>ðŸ“§ {property.agent.email}</div>
-                <div>ðŸ“ž {property.agent.profile?.phoneNumber || 'No phone number'}</div>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '2rem' }}>
+                <div style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Mail size={14} /> {property.agent.email}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Phone size={14} /> {property.agent.profile?.phoneNumber || 'Private Line'}
+                </div>
               </div>
 
-              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Contact Agent</h3>
+              <div style={{ marginBottom: '2rem' }}>
+                <h3 style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                  Quick Inquiry
+                </h3>
                 <InquiryForm propertyId={property.id} />
               </div>
 
-              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem', marginTop: '1.5rem' }}>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '1rem' }}>Schedule a Viewing</h3>
+              <div>
+                <h3 style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+                  Schedule Private Viewing
+                </h3>
                 <BookingForm propertyId={property.id} />
               </div>
             </div>
@@ -201,10 +223,7 @@ export default function PropertyDetail() {
       <style jsx global>{`
         .page-wrapper {
           min-height: 100vh;
-          background: #fff;
-        }
-        .contactBtn {
-          width: 100%;
+          background: var(--background);
         }
       `}</style>
     </div>

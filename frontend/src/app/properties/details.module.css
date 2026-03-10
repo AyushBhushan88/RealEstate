@@ -1,7 +1,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 4rem 2rem;
 }
 
 .backBtn {
@@ -9,34 +9,39 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--text-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
   transition: color 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .backBtn:hover {
-  color: var(--primary);
+  color: var(--foreground);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 3rem;
+  grid-template-columns: 1fr 400px;
+  gap: 4rem;
 }
 
 .mainInfo {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 
+/* Gallery - Minimal Magazine Style */
 .gallery {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: repeat(2, 200px);
-  gap: 1rem;
+  grid-template-rows: repeat(2, 220px);
+  gap: 1.5rem;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .mainImage {
@@ -44,52 +49,65 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: var(--primary-light);
 }
 
 .subImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: var(--primary-light);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .favoriteButton {
   background: var(--surface);
   border: 1px solid var(--border);
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #64748b;
-  font-size: 1.5rem;
+  color: var(--text-muted);
+  font-size: 1.25rem;
   margin-left: 1.5rem;
 }
 
 .favoriteButton:hover {
-  background: #f8fafc;
-  transform: scale(1.1);
-  border-color: var(--primary);
+  background: var(--surface-hover);
+  border-color: var(--foreground);
+  color: var(--foreground);
 }
 
 .favoriteButton.isFavorited {
-  color: #ef4444;
-  border-color: #fecaca;
+  color: #000;
+  border-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .favoriteButton.isFavorited {
+    color: #fff;
+    border-color: #fff;
+  }
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
   color: var(--foreground);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 
 .location {
@@ -97,67 +115,72 @@
   align-items: center;
   gap: 0.5rem;
   color: var(--text-muted);
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 .price {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--primary);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
 }
 
 .quickFeatures {
   display: flex;
-  gap: 2.5rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--border);
+  gap: 3rem;
+  padding: 2rem 0;
   border-bottom: 1px solid var(--border);
 }
 
 .feature {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
 .featureLabel {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   color: var(--text-muted);
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .featureValue {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .descriptionTitle {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
 }
 
 .description {
   line-height: 1.8;
-  color: #4b5563;
-  font-size: 1.125rem;
+  color: var(--foreground);
+  font-size: 1.05rem;
   white-space: pre-line;
+  opacity: 0.9;
 }
 
 /* Sidebar / Agent Card */
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .agentCard {
   background: var(--surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  padding: 2rem;
+  padding: 2.5rem;
   box-shadow: var(--shadow-md);
   position: sticky;
   top: 100px;
@@ -166,104 +189,56 @@
 .agentHeader {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
 .agentAvatar {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: cover;
   background: var(--primary-light);
 }
 
 .agentName {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .agentRole {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
 }
 
 .contactBtn {
   width: 100%;
   margin-top: 1rem;
-  padding: 1rem;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.formGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.formGroup label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.input, .textarea {
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  font-family: inherit;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.input:focus, .textarea:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.successMsg {
-  padding: 1.5rem;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: var(--radius-md);
-  text-align: center;
-}
-
-.successMsg h3 {
-  color: #166534;
-  margin-bottom: 0.5rem;
-}
-
-.successMsg p {
-  color: #15803d;
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
-}
-
-.errorMsg {
-  padding: 0.75rem 1rem;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
 }
 
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 3rem;
   }
   .agentCard {
     position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+  .gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .subImage {
+    display: none;
   }
 }

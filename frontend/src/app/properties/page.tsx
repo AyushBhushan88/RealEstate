@@ -7,6 +7,7 @@ import Navbar from '../../components/Navbar';
 import { apiFetch } from '../../lib/api';
 import { useAuth } from '../../context/AuthContext';
 import styles from './properties.module.css';
+import { Filter, Search, Heart, MapPin, BedDouble, Bath, Square, Save } from 'lucide-react';
 
 interface Property {
   id: string;
@@ -97,7 +98,7 @@ export default function PropertiesPage() {
           {/* Sidebar Filters */}
           <aside className={styles.sidebar}>
             <h2 className={styles.filterTitle}>
-              <span>ðŸ”</span> Filter Properties
+              <Filter size={18} /> Filter Properties
             </h2>
 
             <div className={styles.filterSection}>
@@ -204,7 +205,7 @@ export default function PropertiesPage() {
                   }
                 }}
               >
-                ðŸ’¾ Save Search
+                <Save size={16} /> Save Search
               </button>
             )}
 
@@ -247,7 +248,7 @@ export default function PropertiesPage() {
                   <Link href={`/properties/${property.id}`} key={property.id} className={styles.propertyCard}>
                     <div className={styles.imageContainer}>
                       <img 
-                        src={property.media[0]?.url || 'https://via.placeholder.com/400x300'} 
+                        src={property.media[0]?.url || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800'} 
                         alt={property.title} 
                         className={styles.propertyImage}
                       />
@@ -257,7 +258,7 @@ export default function PropertiesPage() {
                         onClick={(e) => toggleFavorite(e, property.id)}
                         title={property.isFavorited ? "Remove from favorites" : "Add to favorites"}
                       >
-                        {property.isFavorited ? 'â¤ï¸' : 'â™¡'}
+                        <Heart size={18} fill={property.isFavorited ? "currentColor" : "none"} />
                       </button>
 
                       <div className={styles.priceTag}>
@@ -271,18 +272,18 @@ export default function PropertiesPage() {
                     <div className={styles.cardContent}>
                       <h3 className={styles.propertyTitle}>{property.title}</h3>
                       <div className={styles.propertyLocation}>
-                        <span>ðŸ“</span> {property.address}, {property.city}
+                        <MapPin size={14} /> {property.address}, {property.city}
                       </div>
                       
                       <div className={styles.features}>
                         <div className={styles.featureItem}>
-                          <span className={styles.featureIcon}>ðŸ›</span> {property.bedrooms} Beds
+                          <BedDouble size={14} className={styles.featureIcon} /> {property.bedrooms} Beds
                         </div>
                         <div className={styles.featureItem}>
-                          <span className={styles.featureIcon}>ðŸ›€</span> {property.bathrooms} Baths
+                          <Bath size={14} className={styles.featureIcon} /> {property.bathrooms} Baths
                         </div>
                         <div className={styles.featureItem}>
-                          <span className={styles.featureIcon}>â–¨</span> {property.squareFeet} sqft
+                          <Square size={14} className={styles.featureIcon} /> {property.squareFeet} sqft
                         </div>
                       </div>
                     </div>

@@ -56,6 +56,22 @@
 - [x] **[P1-M5-03] Notification System**
   - Real-time or email notifications for new inquiries, signed contracts, and payments.
 
+# Phase 2: Transactions & Digital Contracts
+
+**Goal:** Enable secure digital transactions and legally binding e-signatures for lease and sales agreements.
+
+- [x] **Stripe Integration**: Real-time payment processing for rent and deposits.
+- [x] **Native E-signatures**: Built-in document signing flow.
+- [x] **Contracts Dashboard**: Centralized view for managing all agreements.
+
+# Phase 3: Property Owner & Account Management
+
+**Goal:** Provide specialized dashboards for property owners and account managers.
+
+- [x] **Owner Portal**: Allow owners to track property performance and revenue.
+- [x] **Financial Overview**: Platform-wide transaction tracking for Account Managers.
+- [x] **Identity Verification**: Robust verification flow for high-value transactions.
+
 # Phase 4: Customer Relationship & Experience
 
 **Goal:** Enhance the platform for buyers/tenants with saved searches, favorites, and an integrated booking system for viewings.
@@ -74,7 +90,30 @@
 - [x] **[P4-M2-02] Saved Searches & Alerts**
   - Enable users to save their search criteria and receive alerts when matching properties are listed.
 
-## Success Criteria for Phase 4
-1. Buyers can successfully request a viewing from a property page.
-2. Agents receive and can confirm viewing requests.
-3. Users can manage their viewing schedule from their dashboard.
+# Phase 5: Advanced Analytics & Financials
+
+**Goal:** Deepen financial insights with commission split tracking, lease renewal monitoring, and agent performance analytics.
+
+## Milestone 1: Enhanced Transaction Management [SALE-03]
+- [ ] **[P5-M1-01] Commission Split Logic**
+  - Backend support for automated commission calculation and multi-party splits.
+- [ ] **[P5-M1-02] Split Transaction UI**
+  - Visualizing splits in the Transaction feed.
+
+## Milestone 2: Lease Lifecycle Management [RENT-03]
+- [ ] **[P5-M2-01] Lease Expiry Tracking**
+  - Automated tracking of lease dates and status updates.
+- [ ] **[P5-M2-02] Renewal Notifications**
+  - System alerts for upcoming lease expirations (30/60/90 days).
+
+## Milestone 3: Advanced Analytics [ANLY-01, ANLY-02]
+- [ ] **[P5-M3-01] Enhanced Admin Dashboard**
+  - Visual charts for volume, revenue, and market trends.
+- [ ] **[P5-M3-02] Agent Performance Metrics**
+  - Tracking conversion rates, total sales, and active listings per agent.
+
+## Success Criteria for Phase 5
+1. Admins can see detailed commission splits for every transaction.
+2. Agents are notified automatically of upcoming lease expirations.
+3. Dashboards include visual data representations (charts/graphs).
+

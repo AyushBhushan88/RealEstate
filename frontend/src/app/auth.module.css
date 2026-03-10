@@ -5,48 +5,49 @@
   justify-content: center;
   background: var(--background);
   padding: 2rem;
-  background-image: radial-gradient(circle at top right, var(--primary-light), transparent 400px),
-                    radial-gradient(circle at bottom left, rgba(37, 99, 235, 0.05), transparent 400px);
 }
 
 .authCard {
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
   background: var(--surface);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-sm);
   padding: 3rem;
-  box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
   position: relative;
-  overflow: hidden;
 }
 
 .authLogo {
   text-align: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--foreground);
   margin-bottom: 0.5rem;
+  letter-spacing: -0.05em;
 }
 
 .authSpan {
-  color: var(--primary);
+  font-weight: 900;
 }
 
 .authSubtitle {
   text-align: center;
   color: var(--text-muted);
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 400;
 }
 
 .divider {
   display: flex;
   align-items: center;
   text-align: center;
-  margin: 1.5rem 0;
+  margin: 2rem 0;
   color: var(--text-muted);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }
 
 .divider::before, .divider::after {
@@ -56,11 +57,11 @@
 }
 
 .divider:not(:empty)::before {
-  margin-right: 1rem;
+  margin-right: 1.5rem;
 }
 
 .divider:not(:empty)::after {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 .googleBtn {
@@ -72,37 +73,60 @@
   background: var(--surface);
   color: var(--foreground);
   border: 1px solid var(--border);
-  padding: 0.75rem;
-  border-radius: var(--radius-md);
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
   font-weight: 500;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s ease;
   margin-bottom: 1rem;
 }
 
 .googleBtn:hover {
-  background: var(--background);
-  box-shadow: var(--shadow-sm);
+  background: var(--surface-hover);
+  border-color: var(--border-focus);
 }
 
 .authFooter {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   font-size: 0.875rem;
   color: var(--text-muted);
 }
 
 .authLink {
-  color: var(--primary);
+  color: var(--foreground);
   font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .authLink:hover {
-  text-decoration: underline;
+  opacity: 0.8;
 }
 
 .submitBtn {
   width: 100%;
-  padding: 0.875rem;
-  font-size: 1rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.error {
+  background: #000;
+  color: #fff;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  font-size: 0.8125rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .error {
+    background: #fff;
+    color: #000;
+  }
 }
